@@ -1,8 +1,27 @@
-
 import { IceCreamCone } from "lucide-react";
 import { Button } from "./ui/button";
+import UserMenu from "./UserMenu";
+import { useEffect, useState } from "react";
+import { User } from "@supabase/supabase-js";
+import { supabase } from "@/integrations/supabase/client";
 
 const Navbar = () => {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   return (
     <nav className="bg-cream shadow-md">
       <div className="container mx-auto px-4 py-3">
@@ -25,6 +44,7 @@ const Navbar = () => {
               Liên hệ
             </Button>
           </div>
+          <UserMenu user={user} />
         </div>
       </div>
     </nav>
