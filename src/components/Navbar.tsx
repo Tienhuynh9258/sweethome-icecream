@@ -1,12 +1,15 @@
+
 import { IceCreamCone } from "lucide-react";
 import { Button } from "./ui/button";
 import UserMenu from "./UserMenu";
 import { useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [user, setUser] = useState<User | null>(null);
+  const location = useLocation();
 
   useEffect(() => {
     // Get initial session
@@ -26,23 +29,51 @@ const Navbar = () => {
     <nav className="bg-cream shadow-md">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2">
             <IceCreamCone className="h-8 w-8 text-strawberry" />
             <span className="text-2xl font-bold text-chocolate">Sweethome</span>
-          </div>
+          </Link>
           <div className="hidden md:flex space-x-6">
-            <Button variant="ghost" className="text-chocolate hover:text-strawberry">
-              Trang chủ
-            </Button>
-            <Button variant="ghost" className="text-chocolate hover:text-strawberry">
-              Thực đơn
-            </Button>
-            <Button variant="ghost" className="text-chocolate hover:text-strawberry">
-              Về chúng tôi
-            </Button>
-            <Button variant="ghost" className="text-chocolate hover:text-strawberry">
-              Liên hệ
-            </Button>
+            <Link to="/">
+              <Button 
+                variant="ghost" 
+                className={`text-chocolate hover:text-strawberry ${
+                  location.pathname === "/" ? "bg-vanilla/50" : ""
+                }`}
+              >
+                Trang chủ
+              </Button>
+            </Link>
+            <Link to="/menu">
+              <Button 
+                variant="ghost" 
+                className={`text-chocolate hover:text-strawberry ${
+                  location.pathname === "/menu" ? "bg-vanilla/50" : ""
+                }`}
+              >
+                Thực đơn
+              </Button>
+            </Link>
+            <Link to="/about">
+              <Button 
+                variant="ghost" 
+                className={`text-chocolate hover:text-strawberry ${
+                  location.pathname === "/about" ? "bg-vanilla/50" : ""
+                }`}
+              >
+                Về chúng tôi
+              </Button>
+            </Link>
+            <Link to="/contact">
+              <Button 
+                variant="ghost" 
+                className={`text-chocolate hover:text-strawberry ${
+                  location.pathname === "/contact" ? "bg-vanilla/50" : ""
+                }`}
+              >
+                Liên hệ
+              </Button>
+            </Link>
           </div>
           <UserMenu user={user} />
         </div>
