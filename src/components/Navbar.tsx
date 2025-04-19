@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { Link, useLocation } from "react-router-dom";
+import CartDialog from "./CartDialog";
 
 const Navbar = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -75,7 +76,10 @@ const Navbar = () => {
               </Button>
             </Link>
           </div>
-          <UserMenu user={user} />
+          <div className="flex items-center space-x-2">
+            <CartDialog />
+            <UserMenu user={user} />
+          </div>
         </div>
       </div>
     </nav>
