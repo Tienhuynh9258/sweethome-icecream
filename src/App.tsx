@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import Payment from "./pages/Payment";
 import OrderSuccess from "./pages/OrderSuccess";
 import OrderHistory from "./pages/OrderHistory";
+import ChangePassword from "./pages/ChangePassword";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/payment" element={<Payment />} />
             <Route path="/order-success" element={<OrderSuccess />} />
             <Route path="/order-history" element={<OrderHistory />} />
+            <Route path="/change-password" element={<ChangePassword />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

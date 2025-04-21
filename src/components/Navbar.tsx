@@ -1,4 +1,4 @@
-import { IceCreamCone } from "lucide-react";
+import { IceCreamCone, Search, X } from "lucide-react";
 import { Button } from "./ui/button";
 import UserMenu from "./UserMenu";
 import { useEffect, useState } from "react";
@@ -6,10 +6,14 @@ import { User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
 import { Link, useLocation } from "react-router-dom";
 import CartDialog from "./CartDialog";
+import { Input } from "./ui/input";
+import { useSearch } from "./FeaturedFlavors";
 
 const Navbar = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [showSearch, setShowSearch] = useState(false);
   const location = useLocation();
+  const { searchQuery, setSearchQuery } = useSearch();
 
   useEffect(() => {
     // Get initial session
@@ -24,6 +28,18 @@ const Navbar = () => {
 
     return () => subscription.unsubscribe();
   }, []);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Search is handled automatically through context
+  };
+
+  // Reset search when leaving menu page
+  useEffect(() => {
+    if (location.pathname !== '/menu') {
+      setSearchQuery("");
+    }
+  }, [location.pathname, setSearchQuery]);
 
   return (
     <nav className="bg-white border-b border-orange-100 shadow-sm sticky top-0 z-50">
@@ -76,6 +92,42 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="flex items-center space-x-2">
+            {location.pathname === "/menu" && (
+              <div className="relative">
+                {showSearch ? (
+                  <form onSubmit={handleSearch} className="flex items-center">
+                    <Input
+                      type="text"
+                      placeholder="Tìm kiếm kem..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-[200px] h-9 mr-2"
+                      autoFocus
+                    />
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => {
+                        setShowSearch(false);
+                        setSearchQuery("");
+                      }}
+                      className="h-9 w-9 hover:bg-orange-500 hover:text-white transition-colors"
+                    >
+                      <X className="h-5 w-5" />
+                    </Button>
+                  </form>
+                ) : (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setShowSearch(true)}
+                    className="h-9 w-9 hover:bg-orange-500 hover:text-white transition-colors"
+                  >
+                    <Search className="h-5 w-5" />
+                  </Button>
+                )}
+              </div>
+            )}
             <CartDialog />
             <UserMenu user={user} />
           </div>

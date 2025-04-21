@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ClipboardList, LogOut, User as UserIcon } from "lucide-react";
+import { ClipboardList, LogOut, User as UserIcon, Lock } from "lucide-react";
 
 interface UserMenuProps {
   user: User | null;
@@ -56,6 +56,13 @@ const UserMenu = ({ user }: UserMenuProps) => {
         >
           <ClipboardList className="mr-2 h-4 w-4" />
           Order History
+        </DropdownMenuItem>
+        <DropdownMenuItem 
+          onClick={() => navigate("/change-password")} 
+          className="cursor-pointer hover:bg-orange-50 hover:text-orange-600 rounded-md"
+        >
+          <Lock className="mr-2 h-4 w-4" />
+          Change Password
         </DropdownMenuItem>
         <DropdownMenuSeparator className="my-2 bg-orange-100" />
         <DropdownMenuItem 
