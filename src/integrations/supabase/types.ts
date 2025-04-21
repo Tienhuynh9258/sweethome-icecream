@@ -15,6 +15,10 @@ export type Database = {
           description: string | null
           id: string
           image_url: string | null
+          is_dairy_free: boolean | null
+          is_gluten_free: boolean | null
+          is_new: boolean | null
+          is_popular: boolean | null
           name: string
           price: number
         }
@@ -23,6 +27,10 @@ export type Database = {
           description?: string | null
           id?: string
           image_url?: string | null
+          is_dairy_free?: boolean | null
+          is_gluten_free?: boolean | null
+          is_new?: boolean | null
+          is_popular?: boolean | null
           name: string
           price: number
         }
@@ -31,10 +39,121 @@ export type Database = {
           description?: string | null
           id?: string
           image_url?: string | null
+          is_dairy_free?: boolean | null
+          is_gluten_free?: boolean | null
+          is_new?: boolean | null
+          is_popular?: boolean | null
           name?: string
           price?: number
         }
         Relationships: []
+      }
+      orders: {
+        Row: {
+          id: string
+          created_at: string | null
+          user_id: string
+          customer_name: string
+          email: string
+          phone: string
+          address: string
+          shipping_method: "standard" | "express"
+          shipping_fee: number
+          subtotal: number
+          total: number
+          payment_method: "momo" | "qr"
+          payment_status: string
+          order_status: "pending" | "processing" | "completed" | "cancelled"
+          updated_at: string | null
+        }
+        Insert: {
+          id?: string
+          created_at?: string | null
+          user_id: string
+          customer_name: string
+          email: string
+          phone: string
+          address: string
+          shipping_method: "standard" | "express"
+          shipping_fee: number
+          subtotal: number
+          total: number
+          payment_method: "momo" | "qr"
+          payment_status: string
+          order_status?: "pending" | "processing" | "completed" | "cancelled"
+          updated_at?: string | null
+        }
+        Update: {
+          id?: string
+          created_at?: string | null
+          user_id?: string
+          customer_name?: string
+          email?: string
+          phone?: string
+          address?: string
+          shipping_method?: "standard" | "express"
+          shipping_fee?: number
+          subtotal?: number
+          total?: number
+          payment_method?: "momo" | "qr"
+          payment_status?: string
+          order_status?: "pending" | "processing" | "completed" | "cancelled"
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      order_items: {
+        Row: {
+          id: string
+          created_at: string | null
+          order_id: string
+          flavor_id: string
+          quantity: number
+          price: number
+          total: number
+        }
+        Insert: {
+          id?: string
+          created_at?: string | null
+          order_id: string
+          flavor_id: string
+          quantity: number
+          price: number
+          total: number
+        }
+        Update: {
+          id?: string
+          created_at?: string | null
+          order_id?: string
+          flavor_id?: string
+          quantity?: number
+          price?: number
+          total?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_flavor_id_fkey"
+            columns: ["flavor_id"]
+            isOneToOne: false
+            referencedRelation: "flavors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       profiles: {
         Row: {
@@ -65,7 +184,9 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      order_status: "pending" | "processing" | "completed" | "cancelled"
+      payment_method: "momo" | "qr"
+      shipping_method: "standard" | "express"
     }
     CompositeTypes: {
       [_ in never]: never

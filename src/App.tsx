@@ -10,6 +10,9 @@ import Auth from "./pages/Auth";
 import Menu from "./pages/Menu";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Payment from "./pages/Payment";
+import OrderSuccess from "./pages/OrderSuccess";
+import OrderHistory from "./pages/OrderHistory";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +29,9 @@ const App = () => (
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/order-success" element={<OrderSuccess />} />
+            <Route path="/order-history" element={<OrderHistory />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

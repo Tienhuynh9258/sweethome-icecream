@@ -1,4 +1,3 @@
-
 import { IceCreamCone } from "lucide-react";
 import { Button } from "./ui/button";
 import UserMenu from "./UserMenu";
@@ -27,19 +26,19 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-cream shadow-md">
+    <nav className="bg-white border-b border-orange-100 shadow-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
-            <IceCreamCone className="h-8 w-8 text-strawberry" />
-            <span className="text-2xl font-bold text-chocolate">Sweethome</span>
+            <IceCreamCone className="h-8 w-8 text-orange-500" />
+            <span className="text-2xl font-bold text-orange-gradient">Sweethome</span>
           </Link>
           <div className="hidden md:flex space-x-6">
             <Link to="/">
               <Button 
                 variant="ghost" 
-                className={`text-chocolate hover:text-strawberry ${
-                  location.pathname === "/" ? "bg-vanilla/50" : ""
+                className={`text-gray-700 hover:text-orange-500 hover:bg-orange-50 ${
+                  location.pathname === "/" ? "bg-orange-50 text-orange-500" : ""
                 }`}
               >
                 Trang chủ
@@ -48,8 +47,8 @@ const Navbar = () => {
             <Link to="/menu">
               <Button 
                 variant="ghost" 
-                className={`text-chocolate hover:text-strawberry ${
-                  location.pathname === "/menu" ? "bg-vanilla/50" : ""
+                className={`text-gray-700 hover:text-orange-500 hover:bg-orange-50 ${
+                  location.pathname === "/menu" ? "bg-orange-50 text-orange-500" : ""
                 }`}
               >
                 Thực đơn
@@ -58,8 +57,8 @@ const Navbar = () => {
             <Link to="/about">
               <Button 
                 variant="ghost" 
-                className={`text-chocolate hover:text-strawberry ${
-                  location.pathname === "/about" ? "bg-vanilla/50" : ""
+                className={`text-gray-700 hover:text-orange-500 hover:bg-orange-50 ${
+                  location.pathname === "/about" ? "bg-orange-50 text-orange-500" : ""
                 }`}
               >
                 Về chúng tôi
@@ -68,8 +67,8 @@ const Navbar = () => {
             <Link to="/contact">
               <Button 
                 variant="ghost" 
-                className={`text-chocolate hover:text-strawberry ${
-                  location.pathname === "/contact" ? "bg-vanilla/50" : ""
+                className={`text-gray-700 hover:text-orange-500 hover:bg-orange-50 ${
+                  location.pathname === "/contact" ? "bg-orange-50 text-orange-500" : ""
                 }`}
               >
                 Liên hệ

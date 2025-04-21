@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -20,8 +19,20 @@ export default {
     },
     extend: {
       colors: {
-        // Ice cream inspired colors
+        // Ice cream inspired colors with orange theme
         cream: "#FFF5E6",
+        orange: {
+          50: "#FFF7ED",
+          100: "#FFEDD5",
+          200: "#FED7AA",
+          300: "#FDBA74",
+          400: "#FB923C",
+          500: "#F97316", // Primary orange
+          600: "#EA580C",
+          700: "#C2410C",
+          800: "#9A3412",
+          900: "#7C2D12",
+        },
         strawberry: "#FFB6C1",
         mint: "#98FF98",
         chocolate: "#7B3F00",
