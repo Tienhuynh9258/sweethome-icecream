@@ -147,7 +147,7 @@ const Navbar = () => {
                 )}
               </div>
             )}
-            <CartDialog />
+            <CartDialog user={user} />
             <UserMenu user={user} />
           </div>
         </div>

@@ -4,9 +4,27 @@ import Navbar from "@/components/Navbar";
 import { IceCreamCone } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import { useState, useEffect } from "react";
+import { User } from "@supabase/supabase-js";
+import { supabase } from "@/integrations/supabase/client";
 
 const Menu = () => {
   const { t } = useTranslation();
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
   
   return (
     <SearchProvider>
@@ -50,7 +68,7 @@ const Menu = () => {
                 {t('menu.menuDescription')}
               </motion.p>
             </motion.div>
-            <FeaturedFlavors />
+            <FeaturedFlavors user={user} />
           </div>
         </motion.div>
         <Footer />

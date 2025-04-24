@@ -8,6 +8,9 @@ import { Plus, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import PriceRangeSlider from "./PriceRangeSlider";
 import { useTranslation } from "react-i18next";
+import { User } from "@supabase/supabase-js";
+import { useNavigate } from "react-router-dom";
+import { Flavor } from "@/hooks/useFlavors";
 
 // Create a context for search
 type SearchContextType = {
@@ -42,13 +45,18 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
 
 const ITEMS_PER_PAGE = 9;
 
-const FeaturedFlavors = () => {
+interface FeaturedFlavorsProps {
+  user: User | null;
+}
+
+const FeaturedFlavors = ({ user }: FeaturedFlavorsProps) => {
   const [activeFilter, setActiveFilter] = useState<FlavorFilter['key']>('all');
   const [currentPage, setCurrentPage] = useState(1);
   const { flavors, isLoading, error } = useFlavors(activeFilter);
   const { addToCart } = useCart();
   const { searchQuery, priceRange } = useSearch();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const filteredFlavors = flavors
     .filter(flavor => {
@@ -80,6 +88,15 @@ const FeaturedFlavors = () => {
   React.useEffect(() => {
     setCurrentPage(1);
   }, [activeFilter, searchQuery, priceRange]);
+
+  const handleAddToCart = (flavor: Flavor) => {
+    if (!user) {
+      // Redirect to auth page if not logged in
+      navigate('/auth');
+      return;
+    }
+    addToCart(flavor);
+  };
 
   if (isLoading) {
     return (
@@ -212,12 +229,15 @@ const FeaturedFlavors = () => {
                       whileTap={{ scale: 0.95 }}
                     >
                       <Button
-                        onClick={() => addToCart(flavor)}
-                        className="bg-orange-500 hover:bg-orange-600 w-10 h-10 p-0 group relative overflow-hidden transition-all duration-300 hover:w-[130px] shadow-lg hover:shadow-xl"
+                        onClick={() => handleAddToCart(flavor)}
+                        className={`bg-orange-500 hover:bg-orange-600 w-10 h-10 p-0 group relative overflow-hidden transition-all duration-300 hover:w-[130px] shadow-lg hover:shadow-xl ${
+                          !user ? 'opacity-50 cursor-not-allowed' : ''
+                        }`}
+                        disabled={!user}
                       >
                         <Plus className="h-5 w-5 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:left-3 group-hover:translate-x-0 transition-all duration-300 text-white group-hover:text-white" />
                         <span className="absolute right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white">
-                          {t('featuredFlavors.addToCart')}
+                          {user ? t('featuredFlavors.addToCart') : t('common.login')}
                         </span>
                       </Button>
                     </motion.div>

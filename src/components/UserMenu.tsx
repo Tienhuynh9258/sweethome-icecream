@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ClipboardList, LogOut, User as UserIcon, Lock, Languages } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import LanguageToggle from "./LanguageToggle";
 
 interface UserMenuProps {
   user: User | null;
@@ -28,7 +29,7 @@ const UserMenu = ({ user }: UserMenuProps) => {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    navigate("/auth");
+    navigate("/");
   };
 
   const handleLanguageChange = (value: string) => {
@@ -38,14 +39,17 @@ const UserMenu = ({ user }: UserMenuProps) => {
 
   if (!user) {
     return (
-      <Button 
-        variant="ghost" 
-        className="text-gray-700 hover:text-orange-500 hover:bg-orange-50 flex items-center gap-2"
-        onClick={() => navigate("/auth")}
-      >
-        <UserIcon className="h-5 w-5" />
-        <span>{t('common.login')}</span>
-      </Button>
+      <div className="flex items-center gap-2">
+        <LanguageToggle />
+        <Button 
+          variant="ghost" 
+          className="text-gray-700 hover:text-orange-500 hover:bg-orange-50 flex items-center gap-2"
+          onClick={() => navigate("/auth")}
+        >
+          <UserIcon className="h-5 w-5" />
+          <span>{t('common.login')}</span>
+        </Button>
+      </div>
     );
   }
 

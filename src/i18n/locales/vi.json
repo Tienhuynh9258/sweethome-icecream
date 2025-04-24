@@ -28,7 +28,8 @@
     "password": "Mật khẩu",
     "noAccount": "Không có tài khoản?",
     "haveAccount": "Đã có tài khoản?",
-    "signupSuccess": "Kiểm tra email để xác nhận tài khoản!"
+    "signupSuccess": "Kiểm tra email để xác nhận tài khoản!",
+    "loginSuccess": "Đăng nhập thành công!"
   },
   "menu": {
     "ourMenu": "Thực đơn của chúng tôi",

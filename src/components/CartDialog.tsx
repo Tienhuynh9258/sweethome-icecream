@@ -11,8 +11,13 @@ import { useCart } from "@/contexts/CartContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { User } from "@supabase/supabase-js";
 
-export default function CartDialog() {
+interface CartDialogProps {
+  user: User | null;
+}
+
+export default function CartDialog({ user }: CartDialogProps) {
   const { items, removeFromCart, updateQuantity, totalPrice } = useCart();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -22,6 +27,9 @@ export default function CartDialog() {
     setIsOpen(false);
     navigate('/payment');
   };
+
+  // Don't render the cart button if user is not logged in
+  if (!user) return null;
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
