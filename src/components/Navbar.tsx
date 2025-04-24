@@ -1,4 +1,4 @@
-import { IceCreamCone, Search, X } from "lucide-react";
+import { IceCreamCone, Search, X, Menu as MenuIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import UserMenu from "./UserMenu";
 import { useEffect, useState } from "react";
@@ -8,13 +8,15 @@ import { Link, useLocation } from "react-router-dom";
 import CartDialog from "./CartDialog";
 import { Input } from "./ui/input";
 import { useSearch } from "./FeaturedFlavors";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
   const [user, setUser] = useState<User | null>(null);
   const [showSearch, setShowSearch] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const location = useLocation();
   const { searchQuery, setSearchQuery } = useSearch();
-
+  const { t } = useTranslation();
   useEffect(() => {
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -49,6 +51,8 @@ const Navbar = () => {
             <IceCreamCone className="h-8 w-8 text-orange-500" />
             <span className="text-2xl font-bold text-orange-gradient">Sweethome</span>
           </Link>
+          
+          {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-6">
             <Link to="/">
               <Button 
@@ -57,7 +61,7 @@ const Navbar = () => {
                   location.pathname === "/" ? "bg-orange-50 text-orange-500" : ""
                 }`}
               >
-                Trang chủ
+                {t('common.home')}
               </Button>
             </Link>
             <Link to="/menu">
@@ -67,7 +71,7 @@ const Navbar = () => {
                   location.pathname === "/menu" ? "bg-orange-50 text-orange-500" : ""
                 }`}
               >
-                Thực đơn
+                {t('common.menu')}
               </Button>
             </Link>
             <Link to="/about">
@@ -77,7 +81,7 @@ const Navbar = () => {
                   location.pathname === "/about" ? "bg-orange-50 text-orange-500" : ""
                 }`}
               >
-                Về chúng tôi
+                {t('common.about')}
               </Button>
             </Link>
             <Link to="/contact">
@@ -87,18 +91,33 @@ const Navbar = () => {
                   location.pathname === "/contact" ? "bg-orange-50 text-orange-500" : ""
                 }`}
               >
-                Liên hệ
+                {t('common.contact')}
               </Button>
             </Link>
           </div>
+
           <div className="flex items-center space-x-2">
+            {/* Mobile Menu Button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden"
+              onClick={() => setShowMobileMenu(!showMobileMenu)}
+            >
+              {showMobileMenu ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <MenuIcon className="h-6 w-6" />
+              )}
+            </Button>
+
             {location.pathname === "/menu" && (
               <div className="relative">
                 {showSearch ? (
                   <form onSubmit={handleSearch} className="flex items-center">
                     <Input
                       type="text"
-                      placeholder="Tìm kiếm kem..."
+                      placeholder={t('common.searchPlaceholder')}
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="w-[200px] h-9 mr-2"
@@ -132,6 +151,52 @@ const Navbar = () => {
             <UserMenu user={user} />
           </div>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        {showMobileMenu && (
+          <div className="md:hidden py-4 space-y-2">
+            <Link to="/" onClick={() => setShowMobileMenu(false)}>
+              <Button 
+                variant="ghost" 
+                className={`w-full justify-start text-gray-700 hover:text-orange-500 hover:bg-orange-50 ${
+                  location.pathname === "/" ? "bg-orange-50 text-orange-500" : ""
+                }`}
+              >
+                {t('common.home')}
+              </Button>
+            </Link>
+            <Link to="/menu" onClick={() => setShowMobileMenu(false)}>
+              <Button 
+                variant="ghost" 
+                className={`w-full justify-start text-gray-700 hover:text-orange-500 hover:bg-orange-50 ${
+                  location.pathname === "/menu" ? "bg-orange-50 text-orange-500" : ""
+                }`}
+              >
+                {t('common.menu')}
+              </Button>
+            </Link>
+            <Link to="/about" onClick={() => setShowMobileMenu(false)}>
+              <Button 
+                variant="ghost" 
+                className={`w-full justify-start text-gray-700 hover:text-orange-500 hover:bg-orange-50 ${
+                  location.pathname === "/about" ? "bg-orange-50 text-orange-500" : ""
+                }`}
+              >
+                {t('common.about')}
+              </Button>
+            </Link>
+            <Link to="/contact" onClick={() => setShowMobileMenu(false)}>
+              <Button 
+                variant="ghost" 
+                className={`w-full justify-start text-gray-700 hover:text-orange-500 hover:bg-orange-50 ${
+                  location.pathname === "/contact" ? "bg-orange-50 text-orange-500" : ""
+                }`}
+              >
+                {t('common.contact')}
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </nav>
   );

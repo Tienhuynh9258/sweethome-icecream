@@ -3,8 +3,11 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { IceCreamCone } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const Menu = () => {
+  const { t } = useTranslation();
+  
   return (
     <SearchProvider>
       <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-100">
@@ -36,7 +39,7 @@ const Menu = () => {
                 transition={{ delay: 0.2, duration: 0.6 }}
                 className="text-4xl md:text-5xl font-bold text-orange-gradient mb-4"
               >
-                Thực đơn của chúng tôi
+                {t('menu.ourMenu')}
               </motion.h1>
               <motion.p 
                 initial={{ y: 20, opacity: 0 }}
@@ -44,7 +47,7 @@ const Menu = () => {
                 transition={{ delay: 0.4, duration: 0.6 }}
                 className="text-gray-600 max-w-2xl mx-auto"
               >
-                Khám phá thế giới kem đa dạng của chúng tôi với những hương vị độc đáo và hấp dẫn
+                {t('menu.menuDescription')}
               </motion.p>
             </motion.div>
             <FeaturedFlavors />

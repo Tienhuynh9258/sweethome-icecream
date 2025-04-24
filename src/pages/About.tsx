@@ -2,8 +2,10 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { IceCreamCone } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
-const About = () => {
+const About = () => { 
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -23,7 +25,7 @@ const About = () => {
             >
               <IceCreamCone className="h-20 w-20 text-orange-500 mx-auto mb-6" />
               <h1 className="text-5xl font-bold text-gray-800 mb-4">
-                Về Sweethome
+                {t('about.title')}
               </h1>
               <div className="w-24 h-1 bg-orange-500 mx-auto"></div>
             </motion.div>
@@ -35,15 +37,10 @@ const About = () => {
                 className="bg-orange-50 p-8 rounded-2xl shadow-lg"
               >
                 <p className="text-lg text-gray-700 leading-relaxed mb-6">
-                  Sweethome được thành lập vào năm 2020 với mong muốn mang đến những
-                  hương vị kem thủ công chất lượng cao cho khách hàng. Chúng tôi tin
-                  rằng mỗi viên kem không chỉ là món tráng miệng, mà còn là một trải
-                  nghiệm đáng nhớ.
+                  {t('about.description1')}
                 </p>
                 <p className="text-lg text-gray-700 leading-relaxed">
-                  Tại Sweethome, chúng tôi chỉ sử dụng những nguyên liệu tươi ngon
-                  nhất, kết hợp với công thức độc đáo được phát triển bởi các đầu
-                  bếp giàu kinh nghiệm của chúng tôi.
+                  {t('about.description2')}
                 </p>
               </motion.div>
               <motion.div 
@@ -53,9 +50,7 @@ const About = () => {
                 className="bg-orange-500 p-8 rounded-2xl shadow-lg text-white"
               >
                 <p className="text-lg leading-relaxed">
-                  Đội ngũ nhân viên thân thiện và nhiệt tình của chúng tôi luôn sẵn
-                  sàng phục vụ quý khách với nụ cười trên môi và sự chuyên nghiệp
-                  trong từng chi tiết.
+                  {t('about.description3')}
                 </p>
                 <div className="mt-8 flex items-center justify-center">
                   <IceCreamCone className="h-12 w-12 text-white opacity-50" />

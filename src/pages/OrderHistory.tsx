@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useTranslation } from "react-i18next";
 
 type Order = Database["public"]["Tables"]["orders"]["Row"] & {
   items: Array<{
@@ -71,6 +72,7 @@ const OrderHistory = () => {
   const [selectedStatus, setSelectedStatus] = useState<OrderStatus | "all">("all");
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -149,7 +151,7 @@ const OrderHistory = () => {
           <div className="flex items-center gap-3">
             <Package className="h-8 w-8 text-orange-500" />
             <h1 className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">
-              Order History
+              {t('common.orderHistory')}
             </h1>
           </div>
 
@@ -160,10 +162,10 @@ const OrderHistory = () => {
               onValueChange={(value) => setSelectedStatus(value as OrderStatus | "all")}
             >
               <SelectTrigger className="w-[180px] border-none focus:ring-1 focus:ring-orange-500">
-                <SelectValue placeholder="Filter by status" />
+                <SelectValue placeholder={t('orderHistory.filterByStatus')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Orders</SelectItem>
+                <SelectItem value="all"> {t('orderHistory.allOrders')}</SelectItem>
                 {ORDER_STATUSES.map((status) => (
                   <SelectItem key={status.value} value={status.value}>
                     {status.label}
@@ -185,12 +187,12 @@ const OrderHistory = () => {
             className="text-center py-16 bg-white rounded-2xl shadow-lg shadow-orange-100/50"
           >
             <Package className="h-16 w-16 mx-auto mb-4 text-orange-200" />
-            <p className="text-gray-500 mb-4">No orders found.</p>
+            <p className="text-gray-500 mb-4">{t('orders.noOrders')}</p>
             <Button
               onClick={() => navigate("/menu")}
               className="bg-orange-500 hover:bg-orange-600 text-white"
             >
-              Browse our menu
+              {t('orders.viewMenu')}
             </Button>
           </motion.div>
         ) : (
@@ -262,15 +264,15 @@ const OrderHistory = () => {
                         
                         <div className="space-y-3 pt-4 border-t border-orange-100">
                           <div className="flex justify-between text-gray-600">
-                            <span>Subtotal</span>
+                            <span>{t('payment.subtotal')}</span>
                             <span>{order.subtotal.toLocaleString()}đ</span>
                           </div>
                           <div className="flex justify-between text-gray-600">
-                            <span>Shipping Fee</span>
+                            <span>{t('payment.shippingFee')}</span>
                             <span>{order.shipping_fee.toLocaleString()}đ</span>
                           </div>
                           <div className="flex justify-between text-lg font-bold text-orange-600 pt-2 border-t border-orange-100">
-                            <span>Total</span>
+                            <span>{t('payment.total')}</span>
                             <span>{order.total.toLocaleString()}đ</span>
                           </div>
                         </div>

@@ -6,8 +6,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { IceCreamCone, Mail, Lock, ArrowRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const Auth = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -27,7 +29,7 @@ const Auth = () => {
 
         if (error) throw error;
         
-        toast.success("Logged in successfully!");
+        toast.success(t('auth.loginSuccess'));
         navigate("/");
       } else {
         const { error } = await supabase.auth.signUp({
@@ -37,7 +39,7 @@ const Auth = () => {
 
         if (error) throw error;
         
-        toast.success("Check your email to confirm your signup!");
+        toast.success(t('auth.signupSuccess'));
       }
     } catch (error: any) {
       toast.error(error.message);
@@ -65,12 +67,10 @@ const Auth = () => {
               <IceCreamCone className="w-8 h-8 text-orange-500" />
             </motion.div>
             <h2 className="text-2xl font-bold text-gray-800">
-              {isLogin ? "Welcome back!" : "Create an account"}
+              {isLogin ? t('auth.welcomeBack') : t('auth.createAccount')}
             </h2>
             <p className="text-gray-500 mt-2">
-              {isLogin
-                ? "Sign in to access your account"
-                : "Sign up to get started with Sweethome"}
+              {isLogin ? t('auth.loginToAccess') : t('auth.createToStart')}
             </p>
           </div>
 
@@ -84,7 +84,7 @@ const Auth = () => {
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <Input
                   type="email"
-                  placeholder="Email address"
+                  placeholder={t('auth.email')}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -102,7 +102,7 @@ const Auth = () => {
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <Input
                   type="password"
-                  placeholder="Password"
+                  placeholder={t('auth.password')}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -125,7 +125,7 @@ const Auth = () => {
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 ) : (
                   <>
-                    {isLogin ? "Sign In" : "Sign Up"}
+                    {isLogin ? t('common.login') : t('auth.createAccount')}
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
@@ -140,13 +140,13 @@ const Auth = () => {
               transition={{ delay: 0.5 }}
               className="text-gray-500"
             >
-              {isLogin ? "Don't have an account?" : "Already have an account?"}
+              {isLogin ? t('auth.noAccount') : t('auth.haveAccount')}
               <button
                 type="button"
                 onClick={() => setIsLogin(!isLogin)}
                 className="ml-2 text-orange-500 hover:text-orange-600 font-medium focus:outline-none"
               >
-                {isLogin ? "Sign Up" : "Sign In"}
+                {isLogin ? t('auth.createAccount') : t('common.login')}
               </button>
             </motion.p>
           </div>

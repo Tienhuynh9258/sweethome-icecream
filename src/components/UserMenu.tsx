@@ -9,8 +9,14 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
 } from "@/components/ui/dropdown-menu";
-import { ClipboardList, LogOut, User as UserIcon, Lock } from "lucide-react";
+import { ClipboardList, LogOut, User as UserIcon, Lock, Languages } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface UserMenuProps {
   user: User | null;
@@ -18,10 +24,16 @@ interface UserMenuProps {
 
 const UserMenu = ({ user }: UserMenuProps) => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
     navigate("/auth");
+  };
+
+  const handleLanguageChange = (value: string) => {
+    i18n.changeLanguage(value);
+    localStorage.setItem('language', value);
   };
 
   if (!user) {
@@ -32,7 +44,7 @@ const UserMenu = ({ user }: UserMenuProps) => {
         onClick={() => navigate("/auth")}
       >
         <UserIcon className="h-5 w-5" />
-        <span>Login</span>
+        <span>{t('common.login')}</span>
       </Button>
     );
   }
@@ -45,32 +57,44 @@ const UserMenu = ({ user }: UserMenuProps) => {
           <AvatarFallback className="bg-orange-100 text-orange-600">{user.email?.[0].toUpperCase()}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56 p-2">
+      <DropdownMenuContent className="w-56">
         <div className="px-2 py-1.5 mb-2">
           <p className="text-sm font-medium text-gray-900">{user.email}</p>
-          <p className="text-xs text-gray-500">Logged in user</p>
+          <p className="text-xs text-gray-500">{t('common.loginWith')}</p>
         </div>
         <DropdownMenuItem 
           onClick={() => navigate("/order-history")} 
           className="cursor-pointer hover:bg-orange-50 hover:text-orange-600 rounded-md"
         >
           <ClipboardList className="mr-2 h-4 w-4" />
-          Order History
+          {t('common.orderHistory')}
         </DropdownMenuItem>
         <DropdownMenuItem 
           onClick={() => navigate("/change-password")} 
           className="cursor-pointer hover:bg-orange-50 hover:text-orange-600 rounded-md"
         >
           <Lock className="mr-2 h-4 w-4" />
-          Change Password
+          {t('common.changePassword')}
         </DropdownMenuItem>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger className="cursor-pointer hover:bg-orange-50 hover:text-orange-600 rounded-md">
+            <Languages className="mr-2 h-4 w-4" />
+            {t('common.language')}
+          </DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            <DropdownMenuRadioGroup value={i18n.language} onValueChange={handleLanguageChange}>
+              <DropdownMenuRadioItem value="en">English</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="vi">Vietnamese</DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
         <DropdownMenuSeparator className="my-2 bg-orange-100" />
         <DropdownMenuItem 
           onClick={handleLogout} 
           className="cursor-pointer text-red-600 hover:text-red-700 hover:bg-red-50 rounded-md"
         >
           <LogOut className="mr-2 h-4 w-4" />
-          Logout
+          {t('common.logout')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

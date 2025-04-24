@@ -1,0 +1,160 @@
+{
+  "common": {
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "orderHistory": "Lịch sử đơn hàng",
+    "changePassword": "Đổi mật khẩu",
+    "language": "Ngôn ngữ",
+    "loginWith": "Đăng nhập với tài khoản",
+    "home": "Trang chủ",
+    "menu": "Thực đơn",
+    "about": "Về chúng tôi",
+    "contact": "Liên hệ",
+    "searchPlaceholder": "Tìm kiếm kem...",
+    "cart": "Giỏ hàng"
+  },
+  "cart": {
+    "title": "Giỏ hàng của bạn",
+    "empty": "Giỏ hàng trống",
+    "total": "Tổng cộng",
+    "checkout": "Thanh toán"
+  },
+  "auth": {
+    "welcomeBack": "Chào mừng trở lại!",
+    "createAccount": "Tạo tài khoản",
+    "loginToAccess": "Đăng nhập để truy cập tài khoản của bạn",
+    "createToStart": "Tạo tài khoản để bắt đầu",
+    "email": "Địa chỉ email",
+    "password": "Mật khẩu",
+    "noAccount": "Không có tài khoản?",
+    "haveAccount": "Đã có tài khoản?",
+    "signupSuccess": "Kiểm tra email để xác nhận tài khoản!"
+  },
+  "menu": {
+    "ourMenu": "Thực đơn của chúng tôi",
+    "menuDescription": "Khám phá thế giới kem đa dạng của chúng tôi với những hương vị độc đáo và hấp dẫn"
+  },
+  "featuredFlavors": {
+    "noFlavorsFound": "Không tìm thấy kem phù hợp với tìm kiếm của bạn",
+    "new": "Mới",
+    "popular": "Phổ biến",
+    "dairyFree": "Không sữa",
+    "glutenFree": "Không gluten",
+    "addToCart": "Thêm vào giỏ",
+    "previous": "Trước",
+    "next": "Tiếp",
+    "page": "Trang"
+  },
+  "contact": {
+    "title": "Liên hệ với chúng tôi",
+    "contactInfo": "Thông tin liên hệ",
+    "address": "123 Đường ABC, Quận XYZ, TP.HCM",
+    "phone": "(84) 123-456-789",
+    "sendMessage": "Gửi tin nhắn",
+    "fullName": "Họ và tên",
+    "message": "Tin nhắn",
+    "email": "Email",
+    "send": "Gửi"
+  },
+  "about": {
+    "title": "Về Sweethome",
+    "description1": "Sweethome được thành lập vào năm 2020 với mong muốn mang đến những hương vị kem thủ công chất lượng cao cho khách hàng. Chúng tôi tin rằng mỗi viên kem không chỉ là món tráng miệng, mà còn là một trải nghiệm đáng nhớ.",
+    "description2": "Tại Sweethome, chúng tôi chỉ sử dụng những nguyên liệu tươi ngon nhất, kết hợp với công thức độc đáo được phát triển bởi các đầu bếp giàu kinh nghiệm của chúng tôi.",
+    "description3": "Đội ngũ nhân viên thân thiện và nhiệt tình của chúng tôi luôn sẵn sàng phục vụ quý khách với nụ cười trên môi và sự chuyên nghiệp trong từng chi tiết."
+  },
+  "orderSuccess": {
+    "title": "Đặt hàng thành công!",
+    "message": "Cảm ơn bạn đã đặt hàng. Chúng tôi sẽ gửi email xác nhận đơn hàng cho bạn trong thời gian sớm nhất.",
+    "continueShopping": "Tiếp tục mua hàng"
+  },
+  "hero": {
+    "title1": "KEM",
+    "title2": "ĐƯỢC LÀM TỪ",
+    "title3": "ĐAM MÊ",
+    "description": "Tạo nên hương vị đặc biệt từ những nguyên liệu tự nhiên, được chế biến bởi những người đam mê.",
+    "products": "Sản phẩm",
+    "howItsMade": "Sản xuất?",
+    "very": "RẤT",
+    "good": "NGON!",
+    "flavors": "Hương vị",
+    "toppings": "Toppings"
+  },
+  "howItsMade": {
+    "title1": "TỪ TRUYỀN THỐNG VÀ TÌNH YÊU",
+    "title2": "SẢN XUẤT?",
+    "stats": {
+      "milk": "Lít sữa tươi được xử lý hàng ngày từ các trang trại dầu tươi của chúng tôi.",
+      "production": "Số lượng kem trung bình được sản xuất trong một lô với tình yêu.",
+      "experience": "Năm kinh nghiệm truyền thống trong việc làm kem hoàn hảo."
+    },
+    "description1": "Kem của chúng tôi bắt đầu với những nguyên liệu tốt nhất, bắt đầu từ sữa tươi từ những trang trại dầu tươi hàng ngày. Mỗi buổi sáng, chúng tôi chọn lựa sữa tốt nhất để trở thành phần không thể thiếu trong những món ăn ngọt của chúng tôi.",
+    "description2": "Sử dụng phương pháp truyền thống được truyền từ thế hệ này sang thế hệ khác, chúng tôi biến những nguyên liệu tốt nhất thành kem mịn, béo ngậy, đậm đà.",
+    "description3": "Chất lượng và sự chú ý đến chi tiết là trung tâm mọi điều chúng tôi làm."
+  },
+  "products": {
+    "title1": "100% SẢN PHẨM",
+    "title2": "TỰ NHIÊN",
+    "products1": "KEM ỐC QUẾ",
+    "products2": "KEM CÂY",
+    "products3": "KEM HỘP",
+    "description1": "Từng viên kem mịn như nhung ôm trọn trong chiếc ốc quế nướng giòn rụm. Cắn một miếng, bạn nghe tiếng 'rắc' vui tai, rồi ngay lập tức vị kem mát lạnh tan chảy, lan tỏa hương sữa béo quyện cùng vanilla tự nhiên.",
+    "description2": "Mỗi que kem là một cú 'chạm' sảng khoái: dâu đỏ mọng, xoài vàng ươm hay chanh dây chua ngọt. Nhỏ gọn, tiện lợi, chỉ cần 'bóc - cắn - cảm nhận', bạn đã giải nhiệt tức thì và nạp thêm năng lượng tự nhiên cho mọi chuyển động.",
+    "description3": "Hộp kem dung tích lớn, kem xốp mịn hòa quyện sốt caramel, hạt hạnh nhân rang và chocolate chips. Múc từng muỗng đầy, đặt lên bánh waffle, pancakes hay mix cùng trái cây - cả gia đình sẽ có ngay bữa tráng miệng 5 sao."
+  },
+  "footer": {
+    "contact": "Liên hệ",
+    "address": "Địa chỉ: 123 Đường ABC, Quận XYZ, TP.HCM",
+    "phone": "Điện thoại: (84) 123-456-789",
+    "openingHours": "Giờ mở cửa",
+    "weekdays": "Thứ 2 - Chủ nhật",
+    "hours": "9:00 - 22:00",
+    "copyright": "© 2024 Sweethome. Đã đăng ký bản quyền."
+  },
+  "orders": {
+    "noOrders": "Không có đơn hàng nào.",
+    "viewMenu": "Xem menu"
+  },
+  "payment": {
+    "processing": "Đang xử lý...",
+    "confirmOrder": "Xác nhận đặt hàng",
+    "orderSummary": "Đơn hàng của bạn",
+    "quantity": "Số lượng",
+    "subtotal": "Tạm tính",
+    "shippingFee": "Phí vận chuyển",
+    "total": "Tổng cộng",
+    "shippingInformation": "Thông tin giao hàng",
+    "name": "Họ và tên",
+    "email": "Email",
+    "phone": "Số điện thoại",
+    "address": "Địa chỉ giao hàng",
+    "shippingMethod": "Phương thức vận chuyển",
+    "standardShipping": "Giao hàng tiêu chuẩn (2-3 ngày)",
+    "expressShipping": "Giao hàng nhanh (1-2 ngày)",
+    "paymentMethod": "Phương thức thanh toán",
+    "momo": "Ví MoMo",
+    "qr": "Quét mã QR",
+    "title": "Thanh toán đơn hàng"
+  },
+  "changePassword": {
+    "updating": "Đang cập nhật...",
+    "updatePassword": "Cập nhật mật khẩu",
+    "currentPassword": "Mật khẩu hiện tại",
+    "newPassword": "Mật khẩu mới",
+    "confirmPassword": "Xác nhận mật khẩu mới",
+    "title": "Đổi mật khẩu"
+  },
+  "priceRangeSlider": {
+    "filterByPrice": "Lọc theo giá"
+  },
+  "filters": {
+    "all": "Tất cả",
+    "mostPopular": "Phổ biến nhất",
+    "newFlavors": "Mới nhất",
+    "dairyFree": "Không sữa",
+    "glutenFree": "Không gluten"
+  },
+  "orderHistory": {
+    "filterByStatus": "Lọc theo trạng thái",
+    "allOrders": "Tất cả đơn hàng"
+  }
+} 

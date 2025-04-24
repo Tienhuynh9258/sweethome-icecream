@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 interface FilterButtonProps {
   label: string;
@@ -33,15 +34,17 @@ interface FlavorFiltersProps {
   className?: string;
 }
 
-const FILTERS: FlavorFilter[] = [
-  { label: "ALL FLAVORS", key: "all" },
-  { label: "MOST POPULAR", key: "is_popular" },
-  { label: "NEW ARRIVALS", key: "is_new" },
-  { label: "DAIRY-FREE", key: "is_dairy_free" },
-  { label: "GLUTEN-FREE", key: "is_gluten_free" },
-];
-
 export function FlavorFilters({ activeFilter, onFilterChange, className }: FlavorFiltersProps) {
+  const { t } = useTranslation();
+  
+  const FILTERS: FlavorFilter[] = [
+    { label: t('filters.all'), key: "all" },
+    { label: t('filters.mostPopular'), key: "is_popular" },
+    { label: t('filters.newFlavors'), key: "is_new" },
+    { label: t('filters.dairyFree'), key: "is_dairy_free" },
+    { label: t('filters.glutenFree'), key: "is_gluten_free" },
+  ];
+
   return (
     <div className={cn("flex flex-wrap gap-3", className)}>
       {FILTERS.map((filter) => (

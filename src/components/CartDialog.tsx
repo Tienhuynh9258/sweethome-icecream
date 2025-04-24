@@ -10,11 +10,13 @@ import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function CartDialog() {
   const { items, removeFromCart, updateQuantity, totalPrice } = useCart();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleCheckout = () => {
     setIsOpen(false);
@@ -35,13 +37,13 @@ export default function CartDialog() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-orange-gradient">Giỏ hàng của bạn</DialogTitle>
+          <DialogTitle className="text-orange-gradient"> {t('cart.title')}</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           {items.length === 0 ? (
             <div className="text-center text-muted-foreground py-8">
               <ShoppingCart className="h-12 w-12 mx-auto mb-3 text-orange-200" />
-              <p>Giỏ hàng trống</p>
+              <p>{t('cart.empty')}</p>
             </div>
           ) : (
             <>
@@ -96,14 +98,14 @@ export default function CartDialog() {
               ))}
               <div className="border-t border-orange-100 pt-4 space-y-4">
                 <div className="flex justify-between font-medium text-lg">
-                  <span>Tổng cộng:</span>
+                  <span>{t('cart.total')}</span>
                   <span className="text-orange-500">{totalPrice.toLocaleString()}đ</span>
                 </div>
                 <Button 
                   className="w-full bg-orange-500 hover:bg-orange-600 shadow-lg hover:shadow-xl transition-all duration-200" 
                   onClick={handleCheckout}
                 >
-                  Thanh toán
+                  {t('cart.checkout')}
                 </Button>
               </div>
             </>

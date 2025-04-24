@@ -1,23 +1,25 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const HowItsMade = () => {
+  const { t } = useTranslation();
   const stats = [
     {
       number: '721',
       icon: '🥛',
-      description: 'Gallons of fresh milk processed daily from our local dairy farms.'
+      description: t('howItsMade.stats.milk')
     },
     {
       number: '16kg',
       icon: '🍦',
-      description: 'Average amount of ice cream produced per batch with love.'
+      description: t('howItsMade.stats.production')
     },
     {
       number: '84',
       icon: '❤️',
-      description: 'Years of family tradition in making the perfect ice cream.'
+      description: t('howItsMade.stats.experience')
     }
   ];
 
@@ -30,8 +32,8 @@ const HowItsMade = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-3xl font-bold text-orange-400 mb-4">TRADITION AND LOVE</h2>
-          <h3 className="text-5xl font-bold text-orange-600">HOW IT'S MADE?</h3>
+          <h2 className="text-3xl font-bold text-orange-400 mb-4">{t('howItsMade.title1')}</h2>
+          <h3 className="text-5xl font-bold text-orange-600">{t('howItsMade.title2')}</h3>
         </motion.div>
 
         <div className="flex flex-col md:flex-row gap-8 mb-12">
@@ -70,19 +72,9 @@ const HowItsMade = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <p className="text-gray-800 mb-4">
-              Our ice cream starts with the finest ingredients, beginning with fresh milk 
-              from local dairy farms. Each morning, we carefully select the best milk 
-              that will become part of our delicious treats.
-            </p>
-            <p className="text-gray-700 mb-4">
-              Using traditional methods passed down through generations, we transform 
-              these premium ingredients into smooth, creamy ice cream. Our process 
-              ensures that every scoop maintains the perfect texture and flavor.
-            </p>
-            <p className="text-gray-700 mb-6">
-              Quality control and attention to detail are at the heart of everything we do.
-            </p>
+            <p className="text-gray-800 mb-4">{t('howItsMade.description1')}</p>
+            <p className="text-gray-700 mb-4">{t('howItsMade.description2')}</p>
+            <p className="text-gray-700 mb-6">{t('howItsMade.description3')}</p>
             <motion.button 
               className="text-orange-500 font-semibold flex items-center hover:text-orange-600 transition-colors"
               whileHover={{ x: 10 }}

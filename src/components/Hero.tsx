@@ -1,12 +1,15 @@
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { IceCreamIcon } from "./icons/IceCreamIcon";
 import { ToppingsIcon } from "./icons/ToppingsIcon";
 import { OrganicBadge } from "./icons/OrganicBadge";
 import { NaturalBadge } from "./icons/NaturalBadge";
 import { SingleIceCream } from "./icons/SingleIceCream";
+import { useTranslation } from "react-i18next";
 
 const Hero = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="bg-gradient-to-br from-orange-50 via-white to-orange-100 min-h-screen relative overflow-hidden">
       {/* Background Grid */}
@@ -93,12 +96,12 @@ const Hero = () => {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              <span className="text-gray-800">ICE CREAM</span><br />
-              <span className="text-orange-500">MADE WITH</span><br />
-              <span className="text-orange-600">PASSION</span>
+              <span className="text-gray-800">{t('hero.title1')}</span><br />
+              <span className="text-orange-500">{t('hero.title2')}</span><br />
+              <span className="text-orange-600">{t('hero.title3')}</span>
             </h1>
             <p className="text-gray-600 text-lg mb-8 max-w-md">
-              Discover our artisanal ice cream made with love and the finest natural ingredients.
+              {t('hero.description')}
             </p>
             <div className="flex gap-4">
               <Button 
@@ -107,7 +110,7 @@ const Hero = () => {
                   document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
-                Products
+                {t('hero.products')}
               </Button>
               <Button 
                 variant="outline" 
@@ -116,7 +119,7 @@ const Hero = () => {
                   document.getElementById('how-its-made')?.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
-                How it's made?
+                {t('hero.howItsMade')}
               </Button>
             </div>
             
@@ -128,7 +131,7 @@ const Hero = () => {
                 </div>
                 <div>
                   <h3 className="text-4xl font-bold text-orange-500">16</h3>
-                  <p className="text-gray-600">Flavors</p>
+                  <p className="text-gray-600">{t('hero.flavors')}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -137,7 +140,7 @@ const Hero = () => {
                 </div>
                 <div>
                   <h3 className="text-4xl font-bold text-orange-500">23</h3>
-                  <p className="text-gray-600">Toppings</p>
+                  <p className="text-gray-600">{t('hero.toppings')}</p>
                 </div>
               </div>
             </div>
@@ -203,7 +206,7 @@ const Hero = () => {
                 repeatType: "reverse"
               }}
             >
-              <p className="text-orange-500 font-bold">SOOOOO<br />TASTY!</p>
+              <p className="text-orange-500 font-bold">{t('hero.very')}<br />{t('hero.good')}</p>
             </motion.div>
 
             <motion.div

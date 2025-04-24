@@ -3,8 +3,10 @@ import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const Contact = () => {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -22,7 +24,7 @@ const Contact = () => {
             className="text-center mb-16"
           >
             <h1 className="text-5xl font-bold text-gray-800 mb-4">
-              Liên hệ với chúng tôi
+              {t('contact.title')}
             </h1>
             <div className="w-24 h-1 bg-orange-500 mx-auto"></div>
           </motion.div>
@@ -35,7 +37,7 @@ const Contact = () => {
               className="bg-orange-50 p-8 rounded-2xl shadow-lg"
             >
               <h2 className="text-2xl font-bold text-gray-800 mb-8">
-                Thông tin liên hệ
+                {t('contact.contactInfo')}
               </h2>
               <div className="space-y-6">
                 <motion.div 
@@ -46,7 +48,7 @@ const Contact = () => {
                     <MapPin className="h-6 w-6 text-white" />
                   </div>
                   <span className="text-gray-700">
-                    123 Đường ABC, Quận XYZ, TP.HCM
+                    {t('contact.address')}
                   </span>
                 </motion.div>
                 
@@ -57,7 +59,7 @@ const Contact = () => {
                   <div className="p-3 bg-orange-500 rounded-lg">
                     <Phone className="h-6 w-6 text-white" />
                   </div>
-                  <span className="text-gray-700">(84) 123-456-789</span>
+                  <span className="text-gray-700">{t('contact.phone')}</span>
                 </motion.div>
                 
                 <motion.div 
@@ -67,7 +69,7 @@ const Contact = () => {
                   <div className="p-3 bg-orange-500 rounded-lg">
                     <Mail className="h-6 w-6 text-white" />
                   </div>
-                  <span className="text-gray-700">info@sweethome.com</span>
+                  <span className="text-gray-700">{t('contact.email')}</span>
                 </motion.div>
               </div>
             </motion.div>
@@ -79,13 +81,13 @@ const Contact = () => {
               className="bg-white p-8 rounded-2xl shadow-lg"
             >
               <h2 className="text-2xl font-bold text-gray-800 mb-8">
-                Gửi tin nhắn
+                {t('contact.sendMessage')}
               </h2>
               <form className="space-y-6">
                 <motion.div whileHover={{ scale: 1.02 }} className="space-y-2">
                   <input
                     type="text"
-                    placeholder="Họ và tên"
+                    placeholder={t('contact.fullName')}
                     className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all"
                   />
                 </motion.div>
@@ -93,14 +95,14 @@ const Contact = () => {
                 <motion.div whileHover={{ scale: 1.02 }} className="space-y-2">
                   <input
                     type="email"
-                    placeholder="Email"
+                    placeholder={t('contact.email')}
                     className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all"
                   />
                 </motion.div>
                 
                 <motion.div whileHover={{ scale: 1.02 }} className="space-y-2">
                   <textarea
-                    placeholder="Tin nhắn"
+                    placeholder={t('contact.message')}
                     rows={4}
                     className="w-full p-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 transition-all"
                   ></textarea>
@@ -111,7 +113,7 @@ const Contact = () => {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Button className="w-full py-6 bg-orange-500 hover:bg-orange-600 text-white rounded-xl text-lg font-semibold transition-all">
-                    Gửi tin nhắn
+                    {t('contact.send')}
                   </Button>
                 </motion.div>
               </form>

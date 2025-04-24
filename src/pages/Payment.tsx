@@ -9,6 +9,7 @@ import QRCode from "react-qr-code";
 import { Loader2, CreditCard, Truck, ShoppingBag } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
+import { useTranslation } from "react-i18next";
 
 interface ShippingFormData {
   name: string;
@@ -36,6 +37,7 @@ export default function Payment() {
   });
   const [paymentMethod, setPaymentMethod] = useState<"momo" | "qr">("momo");
   const [isProcessing, setIsProcessing] = useState(false);
+  const { t } = useTranslation();
 
   const shippingFee = SHIPPING_FEES[formData.shippingMethod];
   const total = subtotal + shippingFee;
@@ -146,7 +148,7 @@ export default function Payment() {
         <div className="flex items-center gap-3 mb-8">
           <ShoppingBag className="w-8 h-8 text-orange-500" />
           <h1 className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">
-            Thanh toán
+            {t('payment.title')}
           </h1>
         </div>
         
@@ -155,7 +157,7 @@ export default function Payment() {
           <div className="bg-white rounded-2xl shadow-lg shadow-orange-100/50 p-8 h-fit">
             <div className="flex items-center gap-3 mb-6">
               <ShoppingBag className="w-5 h-5 text-orange-500" />
-              <h2 className="text-xl font-semibold text-gray-800">Đơn hàng của bạn</h2>
+              <h2 className="text-xl font-semibold text-gray-800">{t('payment.orderSummary')}</h2>
             </div>
             <div className="space-y-6">
               {items.map((item) => (
@@ -168,7 +170,7 @@ export default function Payment() {
                     />
                     <div>
                       <h3 className="font-medium text-gray-800">{item.name}</h3>
-                      <p className="text-sm text-gray-500">Số lượng: {item.quantity}</p>
+                      <p className="text-sm text-gray-500">{t('payment.quantity')}: {item.quantity}</p>
                     </div>
                   </div>
                   <span className="font-medium text-orange-600">
@@ -179,15 +181,15 @@ export default function Payment() {
               
               <div className="space-y-4 pt-4">
                 <div className="flex justify-between text-gray-600">
-                  <span>Tạm tính</span>
+                  <span>{t('payment.subtotal')}</span>
                   <span>{subtotal.toLocaleString()}đ</span>
                 </div>
                 <div className="flex justify-between text-gray-600">
-                  <span>Phí vận chuyển</span>
+                  <span>{t('payment.shippingFee')}</span>
                   <span>{shippingFee.toLocaleString()}đ</span>
                 </div>
                 <div className="flex justify-between text-xl font-semibold pt-4 border-t border-orange-100">
-                  <span className="text-gray-800">Tổng cộng</span>
+                  <span className="text-gray-800">{t('payment.total')}</span>
                   <span className="text-orange-600">{total.toLocaleString()}đ</span>
                 </div>
               </div>
@@ -201,12 +203,12 @@ export default function Payment() {
               <div className="bg-white rounded-2xl shadow-lg shadow-orange-100/50 p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <Truck className="w-5 h-5 text-orange-500" />
-                  <h2 className="text-xl font-semibold text-gray-800">Thông tin giao hàng</h2>
+                  <h2 className="text-xl font-semibold text-gray-800">{t('payment.shippingInformation')}</h2>
                 </div>
                 
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="name" className="text-gray-700">Họ và tên</Label>
+                    <Label htmlFor="name" className="text-gray-700">{t('payment.name')}</Label>
                     <Input
                       id="name"
                       value={formData.name}
@@ -217,7 +219,7 @@ export default function Payment() {
                   </div>
                   
                   <div>
-                    <Label htmlFor="email" className="text-gray-700">Email</Label>
+                    <Label htmlFor="email" className="text-gray-700">{t('payment.email')}</Label>
                     <Input
                       id="email"
                       type="email"
@@ -229,7 +231,7 @@ export default function Payment() {
                   </div>
                   
                   <div>
-                    <Label htmlFor="phone" className="text-gray-700">Số điện thoại</Label>
+                    <Label htmlFor="phone" className="text-gray-700">{t('payment.phone')}</Label>
                     <Input
                       id="phone"
                       value={formData.phone}
@@ -240,7 +242,7 @@ export default function Payment() {
                   </div>
                   
                   <div>
-                    <Label htmlFor="address" className="text-gray-700">Địa chỉ giao hàng</Label>
+                    <Label htmlFor="address" className="text-gray-700">{t('payment.address')}</Label>
                     <Input
                       id="address"
                       value={formData.address}
@@ -251,7 +253,7 @@ export default function Payment() {
                   </div>
 
                   <div className="pt-2">
-                    <Label className="text-gray-700 mb-3 block">Phương thức vận chuyển</Label>
+                    <Label className="text-gray-700 mb-3 block">{t('payment.shippingMethod')}</Label>
                     <RadioGroup
                       value={formData.shippingMethod}
                       onValueChange={(value: "standard" | "express") =>
@@ -263,7 +265,7 @@ export default function Payment() {
                         <div className="flex items-center gap-3">
                           <RadioGroupItem value="standard" id="standard" className="text-orange-500" />
                           <Label htmlFor="standard" className="font-normal cursor-pointer">
-                            Giao hàng tiêu chuẩn (2-3 ngày)
+                            {t('payment.standardShipping')}
                           </Label>
                         </div>
                         <span className="text-orange-600 font-medium">15.000đ</span>
@@ -272,7 +274,7 @@ export default function Payment() {
                         <div className="flex items-center gap-3">
                           <RadioGroupItem value="express" id="express" className="text-orange-500" />
                           <Label htmlFor="express" className="font-normal cursor-pointer">
-                            Giao hàng nhanh (1-2 ngày)
+                            {t('payment.expressShipping')}
                           </Label>
                         </div>
                         <span className="text-orange-600 font-medium">30.000đ</span>
@@ -286,7 +288,7 @@ export default function Payment() {
               <div className="bg-white rounded-2xl shadow-lg shadow-orange-100/50 p-8">
                 <div className="flex items-center gap-3 mb-6">
                   <CreditCard className="w-5 h-5 text-orange-500" />
-                  <h2 className="text-xl font-semibold text-gray-800">Phương thức thanh toán</h2>
+                  <h2 className="text-xl font-semibold text-gray-800">{t('payment.paymentMethod')}</h2>
                 </div>
 
                 <RadioGroup
@@ -298,7 +300,7 @@ export default function Payment() {
                     <div className="flex items-center gap-3">
                       <RadioGroupItem value="momo" id="momo" className="text-orange-500" />
                       <Label htmlFor="momo" className="font-normal cursor-pointer">
-                        Ví MoMo
+                        {t('payment.momo')}
                       </Label>
                     </div>
                     <img src="https://play-lh.googleusercontent.com/uCtnppeJ9ENYdJaSL5av-ZL1ZM1f3b35u9k8EOEjK3ZdyG509_2osbXGH5qzXVmoFv0" alt="MoMo" className="h-8" />
@@ -307,7 +309,7 @@ export default function Payment() {
                     <div className="flex items-center gap-3">
                       <RadioGroupItem value="qr" id="qr" className="text-orange-500" />
                       <Label htmlFor="qr" className="font-normal cursor-pointer">
-                        Quét mã QR
+                        {t('payment.qr')}
                       </Label>
                     </div>
                     {paymentMethod === "qr" && (
@@ -327,10 +329,10 @@ export default function Payment() {
                 {isProcessing ? (
                   <>
                     <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                    Đang xử lý...
+                    {t('payment.processing')}
                   </>
                 ) : (
-                  "Xác nhận đặt hàng"
+                  t('payment.confirmOrder')
                 )}
               </Button>
             </form>

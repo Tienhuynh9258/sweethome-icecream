@@ -7,14 +7,14 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Lock } from "lucide-react";
 import Navbar from "@/components/Navbar";
-
+import { useTranslation } from "react-i18next";
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -65,13 +65,13 @@ const ChangePassword = () => {
           <div className="flex items-center gap-3 mb-6">
             <Lock className="h-8 w-8 text-orange-500" />
             <h1 className="text-2xl font-bold text-gray-900">
-              Change Password
+              {t('changePassword.title')}
             </h1>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <Label htmlFor="currentPassword">Current Password</Label>
+              <Label htmlFor="currentPassword">{t('changePassword.currentPassword')}</Label>
               <Input
                 id="currentPassword"
                 type="password"
@@ -83,7 +83,7 @@ const ChangePassword = () => {
             </div>
 
             <div>
-              <Label htmlFor="newPassword">New Password</Label>
+              <Label htmlFor="newPassword">{t('changePassword.newPassword')}</Label>
               <Input
                 id="newPassword"
                 type="password"
@@ -95,7 +95,7 @@ const ChangePassword = () => {
             </div>
 
             <div>
-              <Label htmlFor="confirmPassword">Confirm New Password</Label>
+              <Label htmlFor="confirmPassword">{t('changePassword.confirmPassword')}</Label>
               <Input
                 id="confirmPassword"
                 type="password"
@@ -111,7 +111,7 @@ const ChangePassword = () => {
               disabled={loading}
               className="w-full bg-orange-500 hover:bg-orange-600 text-white"
             >
-              {loading ? "Updating..." : "Update Password"}
+              {loading ? t('changePassword.updating') : t('changePassword.updatePassword')}
             </Button>
           </form>
         </div>

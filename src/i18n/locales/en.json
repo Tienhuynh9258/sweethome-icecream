@@ -1,0 +1,160 @@
+{
+  "common": {
+    "login": "Login",
+    "logout": "Logout",
+    "orderHistory": "Order History",
+    "changePassword": "Change Password",
+    "language": "Language",
+    "loginWith": "Login with account",
+    "home": "Home",
+    "menu": "Menu",
+    "about": "About Us",
+    "contact": "Contact",
+    "searchPlaceholder": "Search ice cream...",
+    "cart": "Cart"
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Cart is empty",
+    "total": "Total",
+    "checkout": "Checkout"
+  },
+  "auth": {
+    "welcomeBack": "Welcome Back!",
+    "createAccount": "Create Account",
+    "loginToAccess": "Login to access your account",
+    "createToStart": "Create an account to get started",
+    "email": "Email address",
+    "password": "Password",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "signupSuccess": "Check your email to confirm your account!"
+  },
+  "menu": {
+    "ourMenu": "Our Menu",
+    "menuDescription": "Explore our diverse world of ice cream with unique and enticing flavors"
+  },
+  "featuredFlavors": {
+    "noFlavorsFound": "No ice cream flavors found matching your search",
+    "new": "New",
+    "popular": "Popular",
+    "dairyFree": "Dairy Free",
+    "glutenFree": "Gluten Free",
+    "addToCart": "Add to Cart",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "contactInfo": "Contact Information",
+    "address": "123 ABC Street, XYZ District, HCMC",
+    "phone": "(84) 123-456-789",
+    "sendMessage": "Send Message",
+    "fullName": "Full Name",
+    "message": "Message",
+    "email": "Email",
+    "send": "Send"
+  },
+  "about": {
+    "title": "About Sweethome",
+    "description1": "Sweethome was established in 2020 with the desire to bring high-quality handcrafted ice cream flavors to customers. We believe that each ice cream is not just a dessert, but a memorable experience.",
+    "description2": "At Sweethome, we only use the freshest ingredients, combined with unique recipes developed by our experienced chefs.",
+    "description3": "Our friendly and enthusiastic staff are always ready to serve you with a smile and professionalism in every detail."
+  },
+  "orderSuccess": {
+    "title": "Order Successful!",
+    "message": "Thank you for your order. We will send you an order confirmation email as soon as possible.",
+    "continueShopping": "Continue Shopping"
+  },
+  "hero": {
+    "title1": "ICE CREAM",
+    "title2": "MADE WITH",
+    "title3": "PASSION",
+    "description": "Creating special flavors from natural ingredients, crafted by passionate people.",
+    "products": "Products",
+    "howItsMade": "How It's Made?",
+    "very": "VERY",
+    "good": "GOOD!",
+    "flavors": "Flavors",
+    "toppings": "Toppings"
+  },
+  "howItsMade": {
+    "title1": "FROM TRADITION AND LOVE",
+    "title2": "HOW IT'S MADE?",
+    "stats": {
+      "milk": "721 liters of fresh milk processed daily from our fresh dairy farms.",
+      "production": "16kg of ice cream produced on average in one batch with love.",
+      "experience": "84 years of traditional experience in making perfect ice cream."
+    },
+    "description1": "Our ice cream starts with the best ingredients, beginning with fresh milk from daily dairy farms. Every morning, we select the best milk to become an essential part of our sweet treats.",
+    "description2": "Using traditional methods passed down from generation to generation, we transform the finest ingredients into smooth, creamy, rich ice cream.",
+    "description3": "Quality and attention to detail are at the center of everything we do."
+  },
+  "products": {
+    "title1": "100% PRODUCTS",
+    "title2": "NATURAL",
+    "products1": "ICE CREAM CONE",
+    "products2": "ICE CREAM BAR",
+    "products3": "SCOOPABLE ICE CREAM",
+    "description1": "Each soft ice cream piece is wrapped in a crunchy cone. When you bite into it, you hear the 'crunch' sound, and then the ice cream melts instantly, releasing the natural vanilla flavor.",
+    "description2": "Each ice cream bar is a 'touch' of refreshment: red strawberry, golden pineapple, or sour lime. Small and convenient, just 'peel - bite - feel', and you've already quenched your thirst and added natural energy to every movement.",
+    "description3": "The large ice cream box has a large volume, creamy soft ice cream mixed with caramel sauce, roasted almond and chocolate chips. Scoop each spoonful, place it on a waffle, pancakes, or mix with fruit - the whole family will have a perfect dessert in no time."
+  },
+  "footer": {
+    "contact": "Contact",
+    "address": "Address: 123 ABC Street, XYZ District, HCMC",
+    "phone": "Phone: (84) 123-456-789",
+    "openingHours": "Opening Hours",
+    "weekdays": "Monday - Sunday",
+    "hours": "9:00 - 22:00",
+    "copyright": "© 2024 Sweethome. All rights reserved."
+  },
+  "orders": {
+    "noOrders": "No orders found.",
+    "viewMenu": "View Menu"
+  },
+  "payment": {
+    "processing": "Processing...",
+    "confirmOrder": "Confirm Order",
+    "orderSummary": "Your Order",
+    "quantity": "Quantity",
+    "subtotal": "Subtotal",
+    "shippingFee": "Shipping Fee",
+    "total": "Total",
+    "shippingInformation": "Shipping Information",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "shippingMethod": "Shipping Method",
+    "standardShipping": "Standard Shipping (2-3 days)",
+    "expressShipping": "Express Shipping (1-2 days)",
+    "paymentMethod": "Payment Method",
+    "momo": "MoMo Wallet",
+    "qr": "QR Code",
+    "title": "Order Payment"
+  },
+  "changePassword": {
+    "updating": "Updating...",
+    "updatePassword": "Update Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm New Password",
+    "title": "Change Password"
+  },
+  "priceRangeSlider": {
+    "filterByPrice": "Filter by Price"
+  },
+  "filters": {
+    "all": "All",
+    "mostPopular": "Most Popular",
+    "newFlavors": "New Flavors",
+    "dairyFree": "Dairy Free",
+    "glutenFree": "Gluten Free"
+  },
+  "orderHistory": {
+    "filterByStatus": "Filter by Status",
+    "allOrders": "All Orders"
+  }
+} 
