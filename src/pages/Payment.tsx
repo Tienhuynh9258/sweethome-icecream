@@ -20,8 +20,8 @@ interface ShippingFormData {
 }
 
 const SHIPPING_FEES = {
-  standard: 15000,
-  express: 30000,
+  standard: { vnd: 15000, usd: 0.60 },
+  express: { vnd: 30000, usd: 1.20 },
 };
 
 export default function Payment() {
@@ -37,10 +37,37 @@ export default function Payment() {
   });
   const [paymentMethod, setPaymentMethod] = useState<"momo" | "qr">("momo");
   const [isProcessing, setIsProcessing] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isEnglish = i18n.language === 'en';
 
-  const shippingFee = SHIPPING_FEES[formData.shippingMethod];
-  const total = subtotal + shippingFee;
+  const formatPrice = (price: number) => {
+    if (isEnglish) {
+      return `$${price.toFixed(2)}`;
+    }
+    return `${price.toLocaleString()}đ`;
+  };
+
+  const calculateSubtotal = (currency: 'vnd' | 'usd') => {
+    return items.reduce((sum, item) => {
+      const price = currency === 'usd' ? item.price_usd : item.price;
+      return sum + (price * item.quantity);
+    }, 0);
+  };
+
+  const shippingFee = {
+    vnd: SHIPPING_FEES[formData.shippingMethod].vnd,
+    usd: SHIPPING_FEES[formData.shippingMethod].usd
+  };
+
+  const calculatedSubtotal = {
+    vnd: calculateSubtotal('vnd'),
+    usd: calculateSubtotal('usd')
+  };
+
+  const total = {
+    vnd: calculatedSubtotal.vnd + shippingFee.vnd,
+    usd: calculatedSubtotal.usd + shippingFee.usd
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,9 +111,12 @@ export default function Payment() {
           phone: formData.phone,
           address: formData.address,
           shipping_method: formData.shippingMethod,
-          shipping_fee: shippingFee,
-          subtotal: subtotal,
-          total: total,
+          shipping_fee: shippingFee.vnd,
+          shipping_fee_usd: shippingFee.usd,
+          subtotal: calculatedSubtotal.vnd,
+          subtotal_usd: calculatedSubtotal.usd,
+          total: total.vnd,
+          total_usd: total.usd,
           payment_method: paymentMethod,
           payment_status: "completed",
           order_status: "processing"
@@ -107,7 +137,9 @@ export default function Payment() {
         flavor_id: item.id,
         quantity: item.quantity,
         price: item.price,
-        total: item.price * item.quantity
+        price_usd: item.price_usd,
+        total: item.price * item.quantity,
+        total_usd: item.price_usd * item.quantity
       }));
 
       const { error: itemsError } = await supabase
@@ -142,6 +174,10 @@ export default function Payment() {
     return null;
   }
 
+  const displayPrice = isEnglish ? total.usd : total.vnd;
+  const displayShippingFee = isEnglish ? shippingFee.usd : shippingFee.vnd;
+  const displaySubtotal = isEnglish ? calculatedSubtotal.usd : calculatedSubtotal.vnd;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-white py-12">
       <div className="container mx-auto px-4 max-w-6xl">
@@ -165,16 +201,16 @@ export default function Payment() {
                   <div className="flex items-center gap-4">
                     <img
                       src={item.image_url}
-                      alt={item.name}
+                      alt={isEnglish ? item.name_en : item.name}
                       className="w-20 h-20 object-cover rounded-xl shadow-md"
                     />
                     <div>
-                      <h3 className="font-medium text-gray-800">{item.name}</h3>
+                      <h3 className="font-medium text-gray-800">{isEnglish ? item.name_en : item.name}</h3>
                       <p className="text-sm text-gray-500">{t('payment.quantity')}: {item.quantity}</p>
                     </div>
                   </div>
                   <span className="font-medium text-orange-600">
-                    {(item.price * item.quantity).toLocaleString()}đ
+                    {formatPrice((isEnglish ? item.price_usd : item.price) * item.quantity)}
                   </span>
                 </div>
               ))}
@@ -182,15 +218,15 @@ export default function Payment() {
               <div className="space-y-4 pt-4">
                 <div className="flex justify-between text-gray-600">
                   <span>{t('payment.subtotal')}</span>
-                  <span>{subtotal.toLocaleString()}đ</span>
+                  <span>{formatPrice(displaySubtotal)}</span>
                 </div>
                 <div className="flex justify-between text-gray-600">
                   <span>{t('payment.shippingFee')}</span>
-                  <span>{shippingFee.toLocaleString()}đ</span>
+                  <span>{formatPrice(displayShippingFee)}</span>
                 </div>
                 <div className="flex justify-between text-xl font-semibold pt-4 border-t border-orange-100">
                   <span className="text-gray-800">{t('payment.total')}</span>
-                  <span className="text-orange-600">{total.toLocaleString()}đ</span>
+                  <span className="text-orange-600">{formatPrice(displayPrice)}</span>
                 </div>
               </div>
             </div>
@@ -268,7 +304,9 @@ export default function Payment() {
                             {t('payment.standardShipping')}
                           </Label>
                         </div>
-                        <span className="text-orange-600 font-medium">15.000đ</span>
+                        <span className="text-orange-600 font-medium">
+                          {formatPrice(SHIPPING_FEES.standard[isEnglish ? 'usd' : 'vnd'])}
+                        </span>
                       </div>
                       <div className="flex items-center justify-between border border-orange-200 rounded-xl p-4 transition-colors hover:bg-orange-50/50">
                         <div className="flex items-center gap-3">
@@ -277,7 +315,9 @@ export default function Payment() {
                             {t('payment.expressShipping')}
                           </Label>
                         </div>
-                        <span className="text-orange-600 font-medium">30.000đ</span>
+                        <span className="text-orange-600 font-medium">
+                          {formatPrice(SHIPPING_FEES.express[isEnglish ? 'usd' : 'vnd'])}
+                        </span>
                       </div>
                     </RadioGroup>
                   </div>

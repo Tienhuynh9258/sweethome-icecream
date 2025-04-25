@@ -20,7 +20,9 @@ export type Database = {
           is_new: boolean | null
           is_popular: boolean | null
           name: string
+          name_en: string
           price: number
+          price_usd: number
         }
         Insert: {
           created_at?: string | null
@@ -32,7 +34,9 @@ export type Database = {
           is_new?: boolean | null
           is_popular?: boolean | null
           name: string
+          name_en: string
           price: number
+          price_usd: number
         }
         Update: {
           created_at?: string | null
@@ -44,7 +48,9 @@ export type Database = {
           is_new?: boolean | null
           is_popular?: boolean | null
           name?: string
+          name_en?: string
           price?: number
+          price_usd?: number
         }
         Relationships: []
       }
@@ -59,8 +65,11 @@ export type Database = {
           address: string
           shipping_method: "standard" | "express"
           shipping_fee: number
+          shipping_fee_usd: number
           subtotal: number
+          subtotal_usd: number
           total: number
+          total_usd: number
           payment_method: "momo" | "qr"
           payment_status: string
           order_status: "pending" | "processing" | "completed" | "cancelled"
@@ -76,8 +85,11 @@ export type Database = {
           address: string
           shipping_method: "standard" | "express"
           shipping_fee: number
+          shipping_fee_usd: number
           subtotal: number
+          subtotal_usd: number
           total: number
+          total_usd: number
           payment_method: "momo" | "qr"
           payment_status: string
           order_status?: "pending" | "processing" | "completed" | "cancelled"
@@ -93,8 +105,11 @@ export type Database = {
           address?: string
           shipping_method?: "standard" | "express"
           shipping_fee?: number
+          shipping_fee_usd?: number
           subtotal?: number
+          subtotal_usd?: number
           total?: number
+          total_usd?: number
           payment_method?: "momo" | "qr"
           payment_status?: string
           order_status?: "pending" | "processing" | "completed" | "cancelled"
@@ -118,7 +133,9 @@ export type Database = {
           flavor_id: string
           quantity: number
           price: number
+          price_usd: number
           total: number
+          total_usd: number
         }
         Insert: {
           id?: string
@@ -127,7 +144,9 @@ export type Database = {
           flavor_id: string
           quantity: number
           price: number
+          price_usd: number
           total: number
+          total_usd: number
         }
         Update: {
           id?: string
@@ -136,7 +155,9 @@ export type Database = {
           flavor_id?: string
           quantity?: number
           price?: number
+          price_usd?: number
           total?: number
+          total_usd?: number
         }
         Relationships: [
           {

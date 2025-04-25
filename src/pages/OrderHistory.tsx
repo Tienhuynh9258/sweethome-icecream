@@ -20,8 +20,12 @@ import { useTranslation } from "react-i18next";
 type Order = Database["public"]["Tables"]["orders"]["Row"] & {
   items: Array<{
     name: string;
+    name_en: string;
     quantity: number;
     price: number;
+    price_usd: number;
+    total: number;
+    total_usd: number;
     image_url: string;
   }>;
 };
@@ -72,7 +76,15 @@ const OrderHistory = () => {
   const [selectedStatus, setSelectedStatus] = useState<OrderStatus | "all">("all");
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isEnglish = i18n.language === 'en';
+
+  const formatPrice = (price: number) => {
+    if (isEnglish) {
+      return `$${price.toFixed(2)}`;
+    }
+    return `${price.toLocaleString()}đ`;
+  };
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -105,9 +117,12 @@ const OrderHistory = () => {
               .select(`
                 quantity,
                 price,
+                price_usd,
                 total,
+                total_usd,
                 flavors (
                   name,
+                  name_en,
                   image_url
                 )
               `)
@@ -119,8 +134,12 @@ const OrderHistory = () => {
               ...order,
               items: (itemsData || []).map((item) => ({
                 name: item.flavors?.name || "Unknown Flavor",
+                name_en: item.flavors?.name_en || "Unknown Flavor",
                 quantity: item.quantity,
                 price: item.price,
+                price_usd: item.price_usd,
+                total: item.total,
+                total_usd: item.total_usd,
                 image_url: item.flavors?.image_url || ""
               }))
             };
@@ -165,7 +184,7 @@ const OrderHistory = () => {
                 <SelectValue placeholder={t('orderHistory.filterByStatus')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all"> {t('orderHistory.allOrders')}</SelectItem>
+                <SelectItem value="all">{t('orderHistory.allOrders')}</SelectItem>
                 {ORDER_STATUSES.map((status) => (
                   <SelectItem key={status.value} value={status.value}>
                     {status.label}
@@ -239,7 +258,7 @@ const OrderHistory = () => {
                                 {item.image_url ? (
                                   <img
                                     src={item.image_url}
-                                    alt={item.name}
+                                    alt={isEnglish ? item.name_en : item.name}
                                     className="w-16 h-16 object-cover rounded-lg shadow-md"
                                   />
                                 ) : (
@@ -248,15 +267,15 @@ const OrderHistory = () => {
                                   </div>
                                 )}
                                 <div>
-                                  <p className="font-medium text-gray-800">{item.name}</p>
+                                  <p className="font-medium text-gray-800">{isEnglish ? item.name_en : item.name}</p>
                                   <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
                                   <p className="text-sm font-medium text-orange-600 mt-1">
-                                    {item.price.toLocaleString()}đ x {item.quantity}
+                                    {formatPrice(isEnglish ? item.price_usd : item.price)} x {item.quantity}
                                   </p>
                                 </div>
                               </div>
                               <span className="font-medium text-orange-600 text-lg">
-                                {(item.price * item.quantity).toLocaleString()}đ
+                                {formatPrice(isEnglish ? item.total_usd : item.total)}
                               </span>
                             </div>
                           ))}
@@ -265,15 +284,15 @@ const OrderHistory = () => {
                         <div className="space-y-3 pt-4 border-t border-orange-100">
                           <div className="flex justify-between text-gray-600">
                             <span>{t('payment.subtotal')}</span>
-                            <span>{order.subtotal.toLocaleString()}đ</span>
+                            <span>{formatPrice(isEnglish ? order.subtotal_usd : order.subtotal)}</span>
                           </div>
                           <div className="flex justify-between text-gray-600">
                             <span>{t('payment.shippingFee')}</span>
-                            <span>{order.shipping_fee.toLocaleString()}đ</span>
+                            <span>{formatPrice(isEnglish ? order.shipping_fee_usd : order.shipping_fee)}</span>
                           </div>
                           <div className="flex justify-between text-lg font-bold text-orange-600 pt-2 border-t border-orange-100">
                             <span>{t('payment.total')}</span>
-                            <span>{order.total.toLocaleString()}đ</span>
+                            <span>{formatPrice(isEnglish ? order.total_usd : order.total)}</span>
                           </div>
                         </div>
                       </div>
