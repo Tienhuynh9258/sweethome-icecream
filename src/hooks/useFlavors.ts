@@ -6,8 +6,11 @@ import { PostgrestFilterBuilder } from '@supabase/postgrest-js';
 export interface Flavor {
   id: string;
   name: string;
+  name_en: string;
   description: string;
+  description_en: string;
   price: number;
+  price_usd: number;
   image_url: string;
   is_popular: boolean;
   is_new: boolean;

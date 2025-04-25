@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, createContext, useContext } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
 import { useCart } from "@/contexts/CartContext";
 import { useFlavors } from "@/hooks/useFlavors";
 import { Button } from "./ui/button";
@@ -19,6 +18,7 @@ type SearchContextType = {
   priceRange: [number, number];
   setPriceRange: (range: [number, number]) => void;
   maxPrice: number;
+  setMaxPrice: (price: number) => void;
 };
 
 export const SearchContext = createContext<SearchContextType>({
@@ -27,17 +27,35 @@ export const SearchContext = createContext<SearchContextType>({
   priceRange: [0, 150000],
   setPriceRange: () => { },
   maxPrice: 150000,
+  setMaxPrice: () => { },
 });
 
 export const useSearch = () => useContext(SearchContext);
 
 export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 150000]);
-  const maxPrice = 150000; // Updated maximum price
+  const { i18n } = useTranslation();
+  const isEnglish = i18n.language === 'en';
+  const defaultMaxPrice = isEnglish ? 6 : 150000;
+  const [maxPrice, setMaxPrice] = useState(defaultMaxPrice);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, defaultMaxPrice]);
+
+  // Update price range when language changes
+  useEffect(() => {
+    const newMaxPrice = isEnglish ? 6 : 150000;
+    setMaxPrice(newMaxPrice);
+    setPriceRange([0, newMaxPrice]);
+  }, [i18n.language]);
 
   return (
-    <SearchContext.Provider value={{ searchQuery, setSearchQuery, priceRange, setPriceRange, maxPrice }}>
+    <SearchContext.Provider value={{ 
+      searchQuery, 
+      setSearchQuery, 
+      priceRange, 
+      setPriceRange, 
+      maxPrice,
+      setMaxPrice
+    }}>
       {children}
     </SearchContext.Provider>
   );
@@ -55,15 +73,18 @@ const FeaturedFlavors = ({ user }: FeaturedFlavorsProps) => {
   const { flavors, isLoading, error } = useFlavors(activeFilter);
   const { addToCart } = useCart();
   const { searchQuery, priceRange } = useSearch();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const isEnglish = i18n.language === 'en';
 
   const filteredFlavors = flavors
     .filter(flavor => {
+      const flavorName = isEnglish ? flavor.name_en : flavor.name;
       const matchesSearch = searchQuery
-        ? new RegExp(searchQuery.trim(), 'i').test(flavor.name)
+        ? new RegExp(searchQuery.trim(), 'i').test(flavorName)
         : true;
-      const matchesPrice = flavor.price >= priceRange[0] && flavor.price <= priceRange[1];
+      const flavorPrice = isEnglish ? flavor.price_usd : flavor.price;
+      const matchesPrice = flavorPrice >= priceRange[0] && flavorPrice <= priceRange[1];
       return matchesSearch && matchesPrice;
     });
 
@@ -160,7 +181,7 @@ const FeaturedFlavors = ({ user }: FeaturedFlavorsProps) => {
                     animate={{ scale: 1 }}
                     transition={{ duration: 0.6 }}
                     src={flavor.image_url}
-                    alt={flavor.name}
+                    alt={isEnglish ? flavor.name_en : flavor.name}
                     className="w-full h-56 object-cover"
                   />
                   <div className="absolute top-2 right-2 flex gap-2">
@@ -189,7 +210,7 @@ const FeaturedFlavors = ({ user }: FeaturedFlavorsProps) => {
                 <div className="p-6">
                   <div className="flex justify-between items-start mb-2 min-h-[40px]">
                     <h3 className="text-xl font-bold text-gray-800 max-w-[60%]">
-                      {flavor.name}
+                      {isEnglish ? flavor.name_en : flavor.name}
                     </h3>
                     <div className="flex flex-col gap-1.5 flex-shrink-0">
                       {flavor.is_dairy_free && (
@@ -214,7 +235,9 @@ const FeaturedFlavors = ({ user }: FeaturedFlavorsProps) => {
                       )}
                     </div>
                   </div>
-                  <p className="text-gray-600 mb-4 min-h-[40px]">{flavor.description}</p>
+                  <p className="text-gray-600 mb-4 min-h-[40px]">
+                    {isEnglish ? flavor.description_en : flavor.description}
+                  </p>
                   <div className="flex items-center justify-between">
                     <motion.span
                       initial={{ opacity: 0 }}
@@ -222,7 +245,10 @@ const FeaturedFlavors = ({ user }: FeaturedFlavorsProps) => {
                       transition={{ delay: 0.3 }}
                       className="text-orange-500 font-bold text-lg"
                     >
-                      {flavor.price.toLocaleString()}đ
+                      {isEnglish 
+                        ? `$${flavor.price_usd.toFixed(2)}`
+                        : `${flavor.price.toLocaleString()}đ`
+                      }
                     </motion.span>
                     <motion.div
                       whileHover={{ scale: 1.05 }}

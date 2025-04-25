@@ -6,22 +6,30 @@ import { useTranslation } from "react-i18next";
 
 const PriceRangeSlider = () => {
   const { priceRange, setPriceRange, maxPrice } = useSearch() 
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const isEnglish = i18n.language === 'en';
+
+  const formatPrice = (price: number) => {
+    if (isEnglish) {
+      return `$${price.toFixed(2)}`;
+    }
+    return `${price.toLocaleString()}đ`;
+  };
 
   return (
     <div className="w-full max-w-md mx-auto px-6 py-4">
       <div className="mb-4">
-        <h3 className="text-lg font-semibold text-gray-700 mb-2"> {t('priceRangeSlider.filterByPrice')}</h3>
+        <h3 className="text-lg font-semibold text-gray-700 mb-2">{t('priceRangeSlider.filterByPrice')}</h3>
         <div className="flex justify-between text-sm text-gray-500 mb-2">
-          <span>{priceRange[0].toLocaleString()}đ</span>
-          <span>{priceRange[1].toLocaleString()}đ</span>
+          <span>{formatPrice(priceRange[0])}</span>
+          <span>{formatPrice(priceRange[1])}</span>
         </div>
       </div>
       <SliderPrimitive.Root
         className="relative flex w-full touch-none select-none items-center"
         value={priceRange}
         max={maxPrice}
-        step={1000}
+        step={isEnglish ? 0.1 : 1000}
         onValueChange={setPriceRange}
       >
         <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-orange-100">
