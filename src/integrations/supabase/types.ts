@@ -72,7 +72,7 @@ export type Database = {
           total_usd: number
           payment_method: "momo" | "qr"
           payment_status: string
-          order_status: "pending" | "processing" | "completed" | "cancelled"
+          order_status_id: number
           updated_at: string | null
         }
         Insert: {
@@ -92,7 +92,7 @@ export type Database = {
           total_usd: number
           payment_method: "momo" | "qr"
           payment_status: string
-          order_status?: "pending" | "processing" | "completed" | "cancelled"
+          order_status_id?: number
           updated_at?: string | null
         }
         Update: {
@@ -112,7 +112,7 @@ export type Database = {
           total_usd?: number
           payment_method?: "momo" | "qr"
           payment_status?: string
-          order_status?: "pending" | "processing" | "completed" | "cancelled"
+          order_status_id?: number
           updated_at?: string | null
         }
         Relationships: [
@@ -121,6 +121,13 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_order_status_id_fkey"
+            columns: ["order_status_id"]
+            isOneToOne: false
+            referencedRelation: "order_status_lov"
             referencedColumns: ["id"]
           }
         ]
@@ -197,6 +204,24 @@ export type Database = {
         }
         Relationships: []
       }
+      order_status_lov: {
+        Row: {
+          id: number
+          description_en: string
+          description_vi: string
+        }
+        Insert: {
+          id: number
+          description_en: string
+          description_vi: string
+        }
+        Update: {
+          id?: number
+          description_en?: string
+          description_vi?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -205,7 +230,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      order_status: "pending" | "processing" | "completed" | "cancelled"
+      // order_status: "pending" | "processing" | "completed" | "cancelled"
       payment_method: "momo" | "qr"
       shipping_method: "standard" | "express"
     }

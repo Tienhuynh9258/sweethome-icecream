@@ -119,7 +119,7 @@ export default function Payment() {
           total_usd: total.usd,
           payment_method: paymentMethod,
           payment_status: "completed",
-          order_status: "processing"
+          order_status_id: 2 // 2 = processing
         })
         .select()
         .single();

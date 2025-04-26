@@ -18,6 +18,11 @@ import {
 import { useTranslation } from "react-i18next";
 
 type Order = Database["public"]["Tables"]["orders"]["Row"] & {
+  order_status_lov: {
+    id: number;
+    description_en: string;
+    description_vi: string;
+  };
   items: Array<{
     name: string;
     name_en: string;
@@ -30,26 +35,38 @@ type Order = Database["public"]["Tables"]["orders"]["Row"] & {
   }>;
 };
 
-type OrderStatus = Order["order_status"];
+type OrderStatus = {
+  id: number;
+  description_en: string;
+  description_vi: string;
+};
 
-const ORDER_STATUSES: { value: OrderStatus; label: string; }[] = [
-  { value: "pending", label: "Pending" },
-  { value: "processing", label: "Processing" },
-  { value: "completed", label: "Completed" },
-  { value: "cancelled", label: "Cancelled" },
+const ORDER_STATUSES: OrderStatus[] = [
+  { id: 1, description_en: "pending", description_vi: "đang chờ" },
+  { id: 2, description_en: "processing", description_vi: "đang xử lý" },
+  { id: 3, description_en: "completed", description_vi: "hoàn thành" },
+  { id: 4, description_en: "cancelled", description_vi: "đã hủy" },
+  { id: 5, description_en: "refunded", description_vi: "hoàn tiền" }
 ];
 
-const OrderStatusBadge = ({ status }: { status: Order["order_status"] }) => {
-  const getStatusColor = (status: Order["order_status"]) => {
+const OrderStatusBadge = ({ status }: { status: string }) => {
+  const getStatusColor = (status: string) => {
     switch (status) {
       case "pending":
+      case "đang chờ":
         return "bg-yellow-100 text-yellow-800 border-yellow-200";
       case "processing":
+      case "đang xử lý":
         return "bg-blue-100 text-blue-800 border-blue-200";
       case "completed":
+      case "hoàn thành":
         return "bg-green-100 text-green-800 border-green-200";
       case "cancelled":
+      case "đã hủy":
         return "bg-red-100 text-red-800 border-red-200";
+      case "refunded":
+      case "hoàn tiền":
+        return "bg-purple-100 text-purple-800 border-purple-200";
       default:
         return "bg-gray-100 text-gray-800 border-gray-200";
     }
@@ -60,9 +77,11 @@ const OrderStatusBadge = ({ status }: { status: Order["order_status"] }) => {
       className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(status)} 
         flex items-center w-fit gap-1.5`}
     >
-      <span className={`w-1.5 h-1.5 rounded-full ${status === 'pending' ? 'bg-yellow-500' : 
-        status === 'processing' ? 'bg-blue-500' : 
-        status === 'completed' ? 'bg-green-500' : 
+      <span className={`w-1.5 h-1.5 rounded-full ${
+        status === 'pending' || status === 'đang chờ' ? 'bg-yellow-500' : 
+        status === 'processing' || status === 'đang xử lý' ? 'bg-blue-500' : 
+        status === 'completed' || status === 'hoàn thành' ? 'bg-green-500' : 
+        status === 'refunded' || status === 'hoàn tiền' ? 'bg-purple-500' :
         'bg-red-500'}`} 
       />
       {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -73,7 +92,7 @@ const OrderStatusBadge = ({ status }: { status: Order["order_status"] }) => {
 const OrderHistory = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedStatus, setSelectedStatus] = useState<OrderStatus | "all">("all");
+  const [selectedStatus, setSelectedStatus] = useState<number | "all">("all");
   const { toast } = useToast();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
@@ -98,12 +117,19 @@ const OrderHistory = () => {
       try {
         let query = supabase
           .from("orders")
-          .select("*")
+          .select(`
+            *,
+            order_status_lov (
+              id,
+              description_en,
+              description_vi
+            )
+          `)
           .eq("user_id", user.id)
           .order("created_at", { ascending: false });
 
         if (selectedStatus !== "all") {
-          query = query.eq("order_status", selectedStatus);
+          query = query.eq("order_status_id", selectedStatus);
         }
 
         const { data: ordersData, error: ordersError } = await query;
@@ -177,8 +203,8 @@ const OrderHistory = () => {
           <div className="flex items-center gap-3 bg-white p-2 rounded-lg shadow-sm">
             <Filter className="h-5 w-5 text-orange-500" />
             <Select
-              value={selectedStatus}
-              onValueChange={(value) => setSelectedStatus(value as OrderStatus | "all")}
+              value={selectedStatus.toString()}
+              onValueChange={(value) => setSelectedStatus(value === "all" ? "all" : parseInt(value))}
             >
               <SelectTrigger className="w-[180px] border-none focus:ring-1 focus:ring-orange-500">
                 <SelectValue placeholder={t('orderHistory.filterByStatus')} />
@@ -186,8 +212,9 @@ const OrderHistory = () => {
               <SelectContent>
                 <SelectItem value="all">{t('orderHistory.allOrders')}</SelectItem>
                 {ORDER_STATUSES.map((status) => (
-                  <SelectItem key={status.value} value={status.value}>
-                    {status.label}
+                  <SelectItem key={status.id} value={status.id.toString()}>
+                    {isEnglish ? status.description_en.charAt(0).toUpperCase() + status.description_en.slice(1) : 
+                    status.description_vi.charAt(0).toUpperCase() + status.description_vi.slice(1)}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -232,7 +259,7 @@ const OrderHistory = () => {
                           <span className="text-lg font-bold text-orange-600">
                             Order #{order.id.slice(0, 8)}
                           </span>
-                          <OrderStatusBadge status={order.order_status} />
+                          <OrderStatusBadge status={isEnglish ? order.order_status_lov.description_en : order.order_status_lov.description_vi} />
                         </div>
                         <div className="flex items-center gap-6 text-sm text-gray-500">
                           <div className="flex items-center gap-2">
