@@ -70,6 +70,7 @@ interface FeaturedFlavorsProps {
 const FeaturedFlavors = ({ user }: FeaturedFlavorsProps) => {
   const [activeFilter, setActiveFilter] = useState<FlavorFilter['key']>('all');
   const [currentPage, setCurrentPage] = useState(1);
+  const [expandedDescriptions, setExpandedDescriptions] = useState<{ [key: string]: boolean }>({});
   const { flavors, isLoading, error } = useFlavors(activeFilter);
   const { addToCart } = useCart();
   const { searchQuery, priceRange } = useSearch();
@@ -117,6 +118,13 @@ const FeaturedFlavors = ({ user }: FeaturedFlavorsProps) => {
       return;
     }
     addToCart(flavor);
+  };
+
+  const toggleDescription = (flavorId: string) => {
+    setExpandedDescriptions(prev => ({
+      ...prev,
+      [flavorId]: !prev[flavorId]
+    }));
   };
 
   if (isLoading) {
@@ -207,12 +215,12 @@ const FeaturedFlavors = ({ user }: FeaturedFlavorsProps) => {
                     )}
                   </div>
                 </div>
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-2 min-h-[40px]">
-                    <h3 className="text-xl font-bold text-gray-800 max-w-[60%]">
+                <div className="p-6 flex flex-col h-[210px]">
+                  <div className="flex gap-4 mb-2">
+                    <h3 className="text-xl font-bold text-gray-800">
                       {isEnglish ? flavor.name_en : flavor.name}
                     </h3>
-                    <div className="flex flex-col gap-1.5 flex-shrink-0">
+                    <div className="flex flex-wrap gap-1.5 ml-auto">
                       {flavor.is_dairy_free && (
                         <motion.span
                           initial={{ x: 20, opacity: 0 }}
@@ -235,10 +243,34 @@ const FeaturedFlavors = ({ user }: FeaturedFlavorsProps) => {
                       )}
                     </div>
                   </div>
-                  <p className="text-gray-600 mb-4 min-h-[40px]">
-                    {isEnglish ? flavor.description_en : flavor.description}
-                  </p>
-                  <div className="flex items-center justify-between">
+                  <div className="flex-grow overflow-y-auto mb-1">
+                    <p className="text-gray-600">
+                      {(() => {
+                        const description = isEnglish ? flavor.description_en : flavor.description;
+                        const isExpanded = expandedDescriptions[flavor.id];
+                        if (description.length <= 100) return description;
+                        
+                        return (
+                          <>
+                            {isExpanded ? description : `${description.slice(0, 100)}...`}
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                toggleDescription(flavor.id);
+                              }}
+                              className="ml-1 text-orange-500 hover:text-orange-600 font-medium text-sm"
+                            >
+                              {isExpanded 
+                                ? `< ${t('featuredFlavors.showLess')}` 
+                                : `${t('featuredFlavors.showMore')} >`
+                              }
+                            </button>
+                          </>
+                        );
+                      })()}
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between mt-auto">
                     <motion.span
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}

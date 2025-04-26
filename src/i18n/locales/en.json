@@ -44,7 +44,9 @@
     "addToCart": "Add to Cart",
     "previous": "Previous",
     "next": "Next",
-    "page": "Page"
+    "page": "Page",
+    "showMore": "Show more",
+    "showLess": "Show less"
   },
   "contact": {
     "title": "Contact Us",
