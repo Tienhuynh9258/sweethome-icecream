@@ -44,7 +44,9 @@
     "addToCart": "Thêm vào giỏ",
     "previous": "Trước",
     "next": "Tiếp",
-    "page": "Trang"
+    "page": "Trang",
+    "showMore": "Xem thêm",
+    "showLess": "Xem ít hơn"
   },
   "contact": {
     "title": "Liên hệ với chúng tôi",

@@ -20,7 +20,9 @@ export type Database = {
           is_new: boolean | null
           is_popular: boolean | null
           name: string
+          name_en: string
           price: number
+          price_usd: number
         }
         Insert: {
           created_at?: string | null
@@ -32,7 +34,9 @@ export type Database = {
           is_new?: boolean | null
           is_popular?: boolean | null
           name: string
+          name_en: string
           price: number
+          price_usd: number
         }
         Update: {
           created_at?: string | null
@@ -44,7 +48,9 @@ export type Database = {
           is_new?: boolean | null
           is_popular?: boolean | null
           name?: string
+          name_en?: string
           price?: number
+          price_usd?: number
         }
         Relationships: []
       }
@@ -59,11 +65,14 @@ export type Database = {
           address: string
           shipping_method: "standard" | "express"
           shipping_fee: number
+          shipping_fee_usd: number
           subtotal: number
+          subtotal_usd: number
           total: number
+          total_usd: number
           payment_method: "momo" | "qr"
           payment_status: string
-          order_status: "pending" | "processing" | "completed" | "cancelled"
+          order_status_id: number
           updated_at: string | null
         }
         Insert: {
@@ -76,11 +85,14 @@ export type Database = {
           address: string
           shipping_method: "standard" | "express"
           shipping_fee: number
+          shipping_fee_usd: number
           subtotal: number
+          subtotal_usd: number
           total: number
+          total_usd: number
           payment_method: "momo" | "qr"
           payment_status: string
-          order_status?: "pending" | "processing" | "completed" | "cancelled"
+          order_status_id?: number
           updated_at?: string | null
         }
         Update: {
@@ -93,11 +105,14 @@ export type Database = {
           address?: string
           shipping_method?: "standard" | "express"
           shipping_fee?: number
+          shipping_fee_usd?: number
           subtotal?: number
+          subtotal_usd?: number
           total?: number
+          total_usd?: number
           payment_method?: "momo" | "qr"
           payment_status?: string
-          order_status?: "pending" | "processing" | "completed" | "cancelled"
+          order_status_id?: number
           updated_at?: string | null
         }
         Relationships: [
@@ -106,6 +121,13 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "orders_order_status_id_fkey"
+            columns: ["order_status_id"]
+            isOneToOne: false
+            referencedRelation: "order_status_lov"
             referencedColumns: ["id"]
           }
         ]
@@ -118,7 +140,9 @@ export type Database = {
           flavor_id: string
           quantity: number
           price: number
+          price_usd: number
           total: number
+          total_usd: number
         }
         Insert: {
           id?: string
@@ -127,7 +151,9 @@ export type Database = {
           flavor_id: string
           quantity: number
           price: number
+          price_usd: number
           total: number
+          total_usd: number
         }
         Update: {
           id?: string
@@ -136,7 +162,9 @@ export type Database = {
           flavor_id?: string
           quantity?: number
           price?: number
+          price_usd?: number
           total?: number
+          total_usd?: number
         }
         Relationships: [
           {
@@ -176,6 +204,24 @@ export type Database = {
         }
         Relationships: []
       }
+      order_status_lov: {
+        Row: {
+          id: number
+          description_en: string
+          description_vi: string
+        }
+        Insert: {
+          id: number
+          description_en: string
+          description_vi: string
+        }
+        Update: {
+          id?: number
+          description_en?: string
+          description_vi?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -184,7 +230,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      order_status: "pending" | "processing" | "completed" | "cancelled"
+      // order_status: "pending" | "processing" | "completed" | "cancelled"
       payment_method: "momo" | "qr"
       shipping_method: "standard" | "express"
     }

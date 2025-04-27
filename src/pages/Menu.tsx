@@ -27,8 +27,8 @@ const Menu = () => {
   }, []);
   
   return (
-    <SearchProvider>
-      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-100">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-100">
+      <SearchProvider>
         <Navbar />
         <motion.div 
           initial={{ opacity: 0 }}
@@ -72,8 +72,8 @@ const Menu = () => {
           </div>
         </motion.div>
         <Footer />
-      </div>
-    </SearchProvider>
+      </SearchProvider>
+    </div>
   );
 };
 

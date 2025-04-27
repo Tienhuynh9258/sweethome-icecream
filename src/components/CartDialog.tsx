@@ -21,7 +21,22 @@ export default function CartDialog({ user }: CartDialogProps) {
   const { items, removeFromCart, updateQuantity, totalPrice } = useCart();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isEnglish = i18n.language === 'en';
+
+  const formatPrice = (price: number) => {
+    if (isEnglish) {
+      return `$${price.toFixed(2)}`;
+    }
+    return `${price.toLocaleString()}đ`;
+  };
+
+  const calculateTotalPrice = () => {
+    return items.reduce((sum, item) => {
+      const price = isEnglish ? item.price_usd : item.price;
+      return sum + (price * item.quantity);
+    }, 0);
+  };
 
   const handleCheckout = () => {
     setIsOpen(false);
@@ -63,13 +78,13 @@ export default function CartDialog({ user }: CartDialogProps) {
                   <div className="flex items-center space-x-4">
                     <img
                       src={item.image_url}
-                      alt={item.name}
+                      alt={isEnglish ? item.name_en : item.name}
                       className="h-16 w-16 rounded-lg object-cover shadow-md"
                     />
                     <div>
-                      <p className="font-medium text-gray-800">{item.name}</p>
+                      <p className="font-medium text-gray-800">{isEnglish ? item.name_en : item.name}</p>
                       <p className="text-sm text-orange-600 font-medium">
-                        {item.price.toLocaleString()}đ x {item.quantity}
+                        {formatPrice(isEnglish ? item.price_usd : item.price)} x {item.quantity}
                       </p>
                     </div>
                   </div>
@@ -107,7 +122,7 @@ export default function CartDialog({ user }: CartDialogProps) {
               <div className="border-t border-orange-100 pt-4 space-y-4">
                 <div className="flex justify-between font-medium text-lg">
                   <span>{t('cart.total')}</span>
-                  <span className="text-orange-500">{totalPrice.toLocaleString()}đ</span>
+                  <span className="text-orange-500">{formatPrice(calculateTotalPrice())}</span>
                 </div>
                 <Button 
                   className="w-full bg-orange-500 hover:bg-orange-600 shadow-lg hover:shadow-xl transition-all duration-200" 
